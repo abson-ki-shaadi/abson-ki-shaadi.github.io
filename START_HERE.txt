@@ -1,0 +1,30 @@
+#ABSON — Abhilasha & Noel Wedding Website
+
+This package contains the complete website, current photos, music, animations and Google backend connection.
+
+Files:
+- index.html — main website
+- styles.css — styling and animations
+- script.js — interactions, music, countdown, RSVP and guest uploads
+- assets/ — photos + wedding-song.mp3
+- ABSON_Wedding_Apps_Script.gs — combined Google Apps Script backend
+
+## GOOGLE CONNECTION — ALREADY CONNECTED
+
+Google Sheet:
+1r8vV4oPPYwv8-4r7NELvvqukItVg4-va-lyjF86U0_U
+
+Apps Script Web App:
+https://script.google.com/macros/s/AKfycbytf8iqJyMMe3MrWC4rUJbthF-M26ZY_2XTpLh-BrP5b1cfWPetPSAR8zieIOr8qAcQOg/exec
+
+Both RSVP and guest photo/video uploads use this same endpoint.
+
+## Hosting
+
+Upload the ENTIRE `ABSON_Wedding_Website_FULL` folder, preserving the `assets` folder.
+
+Do not upload only `index.html`.
+
+## Backend
+
+The included combined Apps Script is provided for reference/backup. The deployed Web App is already live. Do not deploy the two old standalone `.gs` files separately.
