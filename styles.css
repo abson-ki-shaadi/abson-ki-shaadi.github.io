@@ -237,3 +237,68 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
  .file-drop{min-height:135px}
  .upload-button{width:100%}
 }
+/* =========================================
+   MOBILE READABILITY IMPROVEMENTS
+   ========================================= */
+
+@media (max-width: 700px) {
+
+  /* General mobile spacing */
+  .section {
+    padding: 70px 5vw;
+  }
+
+  /* Section headings */
+  h2 {
+    font-size: clamp(3rem, 14vw, 4.5rem);
+    line-height: .9;
+  }
+
+  /* Intro paragraph */
+  .lead {
+    width: 92%;
+    font-size: 15px;
+    line-height: 1.8;
+  }
+
+  /* Four statistic cards */
+  .fake-stats {
+    width: 94%;
+    margin: 35px auto 0;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 14px !important;
+  }
+
+  .fake-stats > * {
+    min-width: 0;
+    min-height: 125px;
+    padding: 22px 12px !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* Big numbers */
+  .fake-stats strong,
+  .fake-stats b {
+    font-size: 2rem !important;
+    line-height: 1;
+  }
+
+  /* Card labels */
+  .fake-stats span,
+  .fake-stats small {
+    font-size: 10px !important;
+    line-height: 1.4;
+    text-align: center;
+    margin-top: 10px;
+  }
+
+  /* Prevent mobile horizontal overflow */
+  .fake-stats,
+  .fake-stats > * {
+    overflow: hidden;
+  }
+}
