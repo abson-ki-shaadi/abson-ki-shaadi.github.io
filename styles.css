@@ -568,4 +568,149 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   }
 
 }
+  /* ================================
+   MOBILE HERO FIX
+   ================================ */
+
+@media (max-width: 800px) {
+
+  .hero {
+    min-height: 100svh !important;
+    height: auto !important;
+    display: block !important;
+    position: relative !important;
+    overflow: hidden !important;
+  }
+
+  .hero-photo {
+    position: absolute !important;
+    inset: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center center !important;
+  }
+
+  .hero-tint {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 1 !important;
+    background:
+      linear-gradient(
+        90deg,
+        rgba(0,0,0,.62),
+        rgba(0,0,0,.20)
+      ) !important;
+  }
+
+  .hero-content {
+    position: relative !important;
+    z-index: 5 !important;
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100svh !important;
+
+    margin: 0 !important;
+    padding: 92px 24px 72px !important;
+
+    color: #fff !important;
+
+    background:
+      linear-gradient(
+        90deg,
+        rgba(0,0,0,.58),
+        rgba(0,0,0,.10)
+      ) !important;
+
+    justify-content: center !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  .hero-content .kicker,
+  .hero-content h1,
+  .hero-content .name-strip,
+  .hero-content .hero-date,
+  .hero-content .countdown-wrap,
+  .hero-content .cta {
+    position: relative !important;
+    z-index: 6 !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+  }
+
+  .hero h1 {
+    font-size: clamp(4.1rem, 15vw, 5.8rem) !important;
+    line-height: .82 !important;
+    margin: 14px 0 18px !important;
+  }
+
+  .name-strip {
+    font-size: 1.45rem !important;
+  }
+
+  .hero-date {
+    font-size: 9px !important;
+    margin-top: 12px !important;
+  }
+
+  .countdown-wrap {
+    width: min(100%, 370px) !important;
+    margin: 24px 0 22px !important;
+    padding: 12px 10px !important;
+  }
+
+  .countdown-wrap > span {
+    font-size: 7px !important;
+    line-height: 1.35 !important;
+  }
+
+  .countdown {
+    width: 100% !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 3px !important;
+  }
+
+  .countdown div {
+    min-width: 0 !important;
+    flex: 1 1 0 !important;
+  }
+
+  .countdown strong {
+    font-size: 2.1rem !important;
+  }
+
+  .countdown small {
+    font-size: 6px !important;
+  }
+
+  .hero-content .cta {
+    padding: 13px 16px !important;
+    font-size: 9px !important;
+  }
+
+  .scroll-note {
+    z-index: 7 !important;
+    bottom: 14px !important;
+    font-size: 7px !important;
+    white-space: nowrap !important;
+  }
+
+  .hero-stickers {
+    z-index: 8 !important;
+  }
+
+  /* Keep confetti above everything */
+  .confetti,
+  .abson-confetti {
+    position: fixed !important;
+    z-index: 10000 !important;
+    pointer-events: none !important;
+  }
+}
 }
