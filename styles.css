@@ -1398,4 +1398,28 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
     max-height: none !important;
     object-fit: cover !important;
   }
+  /* =====================================================
+   DESKTOP HERO TEXT FIX
+   Keep mobile version exactly as it is
+   ===================================================== */
+
+@media (min-width: 701px) {
+
+  .hero .kicker {
+    color: #171717 !important;
+  }
+
+  .hero .name-strip {
+    color: #171717 !important;
+  }
+
+  .hero .name-strip i {
+    color: #171717 !important;
+  }
+
+  .hero .hero-date {
+    color: #171717 !important;
+  }
+
+}
 }
