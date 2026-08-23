@@ -716,216 +716,305 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
 }
 
 /* =========================================================
-   ABSON LORE — DESKTOP FIX
-   Keep the interactive Lore photo + story together.
+   #ABSON — STABLE INTERACTIVE LORE
    ========================================================= */
 
-@media (min-width: 801px) {
-  #story.lore-section {
-    display: block !important;
-    position: relative !important;
-    min-height: 0 !important;
-    padding: 110px 7vw 120px !important;
-    overflow: hidden !important;
-  }
+.lore-section {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  gap: 6vw;
+  align-items: center;
+  background: var(--blue);
+  color: #fff;
+  overflow: hidden;
+}
 
-  #story.lore-section > .section-heading {
-    display: block !important;
-    width: min(850px, 90vw) !important;
-    max-width: 850px !important;
-    margin: 0 auto 60px !important;
-    text-align: center !important;
-  }
+.lore-section > .abson-watermark {
+  z-index: 0;
+  left: -20px;
+  top: 50%;
+  color: #111;
+  opacity: .055;
+  transform: translateY(-50%) rotate(-8deg);
+  font-size: clamp(100px, 15vw, 210px);
+}
 
-  #story.lore-section .lore-container {
-    width: min(1250px, 100%) !important;
-    margin: 0 auto !important;
-    display: grid !important;
-    grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr) !important;
-    grid-template-areas:
-      "photo story"
-      "photo timeline"
-      "photo next" !important;
-    column-gap: clamp(45px, 6vw, 90px) !important;
-    row-gap: 24px !important;
-    align-items: center !important;
-  }
+.lore-copy,
+.lore-visual {
+  position: relative;
+  z-index: 2;
+}
 
-  #story.lore-section .lore-photo-wrap {
-    grid-area: photo !important;
-    width: 100% !important;
-    max-width: 570px !important;
-    justify-self: center !important;
-    align-self: center !important;
-    position: relative !important;
-    background: #fff !important;
-    border: 3px solid var(--ink) !important;
-    padding: 14px 14px 48px !important;
-    box-shadow: 10px 10px 0 var(--ink) !important;
-    transform: rotate(-2deg) !important;
-    box-sizing: border-box !important;
-  }
+.lore-copy {
+  max-width: 520px;
+}
 
-  #story.lore-section .lore-photo {
-    display: block !important;
-    width: 100% !important;
-    height: 560px !important;
-    object-fit: cover !important;
-    object-position: center !important;
-  }
+.lore-copy .kicker {
+  color: #fff;
+}
 
-  #story.lore-section .lore-photo-label {
-    position: absolute !important;
-    left: 15px !important;
-    bottom: 14px !important;
-    font: 1rem "Bebas Neue", Arial, sans-serif !important;
-    color: var(--ink) !important;
-    letter-spacing: .08em !important;
-  }
+.lore-copy h2 {
+  color: #fff;
+  font-size: clamp(4.5rem, 7vw, 7rem);
+  line-height: .78;
+  margin: 16px 0 24px;
+}
 
-  #story.lore-section .lore-photo-stamp {
-    position: absolute !important;
-    right: 15px !important;
-    bottom: 13px !important;
-    color: var(--ink) !important;
-    font-weight: 900 !important;
-    font-style: italic !important;
-    transform: rotate(-4deg) !important;
-  }
+.lore-intro {
+  color: #fff;
+  line-height: 1.75;
+  max-width: 480px;
+}
 
-  #story.lore-section .lore-story {
-    grid-area: story !important;
-    width: 100% !important;
-    min-height: 230px !important;
-    box-sizing: border-box !important;
+.lore-story-panel {
+  margin-top: 28px;
+  padding: 18px 20px;
+  background: var(--yellow);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+  transform: rotate(1deg);
+}
+
+.lore-counter {
+  display: flex;
+  gap: 7px;
+  font: 16px "Bebas Neue";
+  letter-spacing: .08em;
+}
+
+.lore-counter span:first-child {
+  color: var(--red);
+}
+
+.lore-story-panel h3 {
+  margin: 7px 0 8px;
+  font: 3.5rem/.85 "Bebas Neue";
+}
+
+.lore-story-panel p {
+  margin: 0;
+  line-height: 1.55;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.lore-caption {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.lore-visual {
+  min-width: 0;
+}
+
+.lore-photo-card {
+  position: relative;
+  background: #fff;
+  padding: 12px 12px 42px;
+  border: 3px solid var(--ink);
+  box-shadow: 11px 11px 0 var(--ink);
+  transform: rotate(-2deg);
+}
+
+.lore-photo-card img {
+  display: block;
+  width: 100%;
+  height: 500px;
+  object-fit: cover;
+  transition: opacity .2s ease, transform .3s ease;
+}
+
+.lore-photo-card img.lore-changing {
+  opacity: 0;
+  transform: scale(.97);
+}
+
+.lore-photo-label {
+  position: absolute;
+  left: 16px;
+  bottom: 12px;
+  color: var(--ink);
+  font: 16px "Bebas Neue";
+  letter-spacing: .08em;
+}
+
+.lore-photo-stamp {
+  position: absolute;
+  right: -16px;
+  bottom: 25px;
+  padding: 9px 13px;
+  background: var(--pink);
+  color: var(--ink);
+  border: 2px solid var(--ink);
+  font: 900 15px Arial, sans-serif;
+  font-style: italic;
+  box-shadow: 4px 4px 0 var(--ink);
+  transform: rotate(7deg);
+}
+
+.lore-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 25px;
+}
+
+.lore-arrow {
+  flex: 0 0 42px;
+  height: 42px;
+  border: 2px solid var(--ink);
+  background: var(--yellow);
+  color: var(--ink);
+  font-size: 20px;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 3px 3px 0 var(--ink);
+}
+
+.lore-arrow:active {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.lore-steps {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 5px;
+  flex: 1;
+}
+
+.lore-step {
+  min-width: 0;
+  min-height: 58px;
+  padding: 7px 4px;
+  border: 2px solid transparent;
+  background: rgba(255,255,255,.10);
+  color: #fff;
+  cursor: pointer;
+  font-family: inherit;
+  text-align: center;
+  transition: .2s ease;
+}
+
+.lore-step span {
+  display: block;
+  font: 18px "Bebas Neue";
+}
+
+.lore-step small {
+  display: block;
+  font-size: 7px;
+  font-weight: 900;
+  line-height: 1.15;
+}
+
+.lore-step:hover {
+  transform: translateY(-3px);
+}
+
+.lore-step.active {
+  background: var(--yellow);
+  color: var(--ink);
+  border-color: var(--ink);
+  box-shadow: 3px 3px 0 var(--ink);
+  transform: translateY(-4px);
+}
+
+@media (max-width: 800px) {
+
+  .lore-section {
     display: flex !important;
     flex-direction: column !important;
-    justify-content: center !important;
-    background: var(--yellow) !important;
-    color: var(--ink) !important;
-    border: 3px solid var(--ink) !important;
-    padding: 32px 34px !important;
-    box-shadow: 8px 8px 0 var(--ink) !important;
-    transform: rotate(1deg) !important;
+    gap: 38px !important;
+    padding: 75px 5vw !important;
+    align-items: stretch !important;
   }
 
-  #story.lore-section .lore-counter {
-    font-size: 11px !important;
-    font-weight: 900 !important;
-    letter-spacing: .12em !important;
-    margin-bottom: 14px !important;
+  .lore-copy,
+  .lore-visual {
+    width: 100%;
+    max-width: none;
   }
 
-  #story.lore-section .lore-counter span:first-child {
-    color: var(--red) !important;
+  .lore-copy h2 {
+    font-size: clamp(4rem, 16vw, 5.8rem);
   }
 
-  #story.lore-section .lore-story h3 {
-    margin: 0 0 14px !important;
-    font: 4rem/.88 "Bebas Neue", Arial, sans-serif !important;
-    letter-spacing: .02em !important;
+  .lore-intro {
+    font-size: 14px;
   }
 
-  #story.lore-section .lore-story p {
-    margin: 0 !important;
-    max-width: 650px !important;
-    font-size: 15px !important;
-    line-height: 1.6 !important;
-    font-weight: 600 !important;
+  .lore-story-panel {
+    margin-top: 22px;
   }
 
-  #story.lore-section .lore-caption {
-    margin-top: 18px !important;
-    font-size: 9px !important;
-    font-weight: 900 !important;
-    letter-spacing: .1em !important;
-    text-transform: uppercase !important;
+  .lore-story-panel h3 {
+    font-size: 3rem;
   }
 
-  #story.lore-section .lore-timeline {
-    grid-area: timeline !important;
-    width: 100% !important;
-    display: grid !important;
-    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
-    gap: 8px !important;
+  .lore-photo-card {
+    width: calc(100% - 8px);
+    margin: 0 4px;
+    padding: 8px 8px 38px;
+    box-shadow: 7px 7px 0 var(--ink);
   }
 
-  #story.lore-section .lore-step {
-    min-width: 0 !important;
-    min-height: 68px !important;
-    display: flex !important;
-    flex-direction: column !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 5px !important;
-    padding: 8px 5px !important;
-    border: 2px solid var(--ink) !important;
-    background: var(--paper) !important;
-    color: var(--ink) !important;
-    cursor: pointer !important;
-    box-sizing: border-box !important;
+  .lore-photo-card img {
+    height: 390px;
   }
 
-  #story.lore-section .lore-step span {
-    font-size: 9px !important;
-    font-weight: 900 !important;
-    color: var(--red) !important;
+  .lore-photo-label {
+    left: 10px;
+    bottom: 9px;
+    font-size: 13px;
   }
 
-  #story.lore-section .lore-step strong {
-    font-size: 8px !important;
-    line-height: 1.1 !important;
-    letter-spacing: .07em !important;
-    text-align: center !important;
+  .lore-photo-stamp {
+    right: -8px;
+    bottom: 20px;
+    font-size: 12px;
   }
 
-  #story.lore-section .lore-step.active {
-    background: var(--pink) !important;
-    box-shadow: 4px 4px 0 var(--ink) !important;
+  .lore-controls {
+    gap: 6px;
+    margin-top: 20px;
   }
 
-  #story.lore-section .lore-next {
-    grid-area: next !important;
-    justify-self: start !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    width: auto !important;
-    margin: 0 !important;
-    padding: 13px 18px !important;
-    border: 2px solid var(--ink) !important;
-    background: var(--ink) !important;
-    color: #fff !important;
-    box-shadow: 5px 5px 0 var(--pink) !important;
-    font-size: 9px !important;
-    font-weight: 900 !important;
-    letter-spacing: .13em !important;
-    cursor: pointer !important;
+  .lore-arrow {
+    flex-basis: 38px;
+    height: 38px;
+  }
+
+  .lore-step {
+    min-height: 62px;
+  }
+
+  .lore-step span {
+    font-size: 16px;
+  }
+
+  .lore-step small {
+    font-size: 6px;
   }
 }
 
-/* Tablet */
-@media (min-width: 701px) and (max-width: 800px) {
-  #story.lore-section .lore-container {
-    display: grid !important;
-    grid-template-columns: 1fr !important;
-    grid-template-areas:
-      "photo"
-      "story"
-      "timeline"
-      "next" !important;
-    gap: 28px !important;
+@media (max-width: 420px) {
+
+  .lore-photo-card img {
+    height: 340px;
   }
 
-  #story.lore-section .lore-photo-wrap,
-  #story.lore-section .lore-story,
-  #story.lore-section .lore-timeline,
-  #story.lore-section .lore-next {
-    width: 100% !important;
+  .lore-step {
+    min-height: 57px;
   }
 
-  #story.lore-section .lore-photo-wrap { grid-area: photo !important; }
-  #story.lore-section .lore-story { grid-area: story !important; }
-  #story.lore-section .lore-timeline { grid-area: timeline !important; }
-  #story.lore-section .lore-next { grid-area: next !important; }
+  .lore-step small {
+    font-size: 5.5px;
+  }
 }
