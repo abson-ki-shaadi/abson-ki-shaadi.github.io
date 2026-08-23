@@ -69,7 +69,7 @@
 <div class="quote-card">
   <span class="quote-mark">“</span>
   <p>We could have kept this between us. But apparently, we needed 300 witnesses.</p>
-  <small>— #ABSON · 09.01.2027</small>
+<small>— <span class="abson-logo">#ABSON</span> · 09.01.2027</small>
 </div>
 <section class="gallery section" id="gallery"><div class="section-heading"><p class="kicker">THE EVIDENCE</p><h2>Exhibit A through I.</h2><p>Every picture appears once. We checked. Twice.</p></div><div class="gallery-grid"><figure class="gallery-photo p1"><img src="02.png" alt="ABSON memory 1"><figcaption>Evidence #01 · suspiciously cute</figcaption></figure><figure class="gallery-photo p2"><img src="03.jpeg" alt="ABSON memory 2"><figcaption>Evidence #02 · no context needed</figcaption></figure><figure class="gallery-photo p3"><img src="04.jpeg" alt="ABSON memory 3"><figcaption>Evidence #03 · main character energy</figcaption></figure><figure class="gallery-photo p4"><img src="05.jpeg" alt="ABSON memory 4"><figcaption>Evidence #04 · family-safe-ish</figcaption></figure><figure class="gallery-photo p5"><img src="06.jpeg" alt="ABSON memory 5"><figcaption>Evidence #05 · outfit department approved</figcaption></figure><figure class="gallery-photo p6"><img src="07.jpeg" alt="ABSON memory 6"><figcaption>Evidence #06 · caught smiling</figcaption></figure><figure class="gallery-photo p7"><img src="08.jpeg" alt="ABSON memory 7"><figcaption>Evidence #07 · plot thickens</figcaption></figure><figure class="gallery-photo p8"><img src="09.jpeg" alt="ABSON memory 8"><figcaption>Evidence #08 · still going</figcaption></figure></div></section>
 
@@ -84,6 +84,38 @@
 
 <div class="lightbox" id="lightbox" aria-hidden="true"><button class="lightbox-close" id="lightboxClose" aria-label="Close image">×</button><img id="lightboxImage" src="" alt="Expanded ABSON photo"><div class="lightbox-caption" id="lightboxCaption"></div></div>
 <audio id="weddingMusic" loop preload="none"><source src="wedding-song.mp3" type="audio/mpeg"></audio>
+  <style>
+/* #ABSON logo treatment */
+.abson-logo,
+.footer-badge,
+.upload-stamp,
+.nav-logo,
+.opening-logo {
+  display: inline-block;
+  background: #f8f1e5;
+  color: #111;
+  border: 2px solid #111;
+  box-shadow: 6px 6px 0 #111;
+  padding: 8px 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.04em;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .abson-logo,
+  .footer-badge,
+  .upload-stamp,
+  .nav-logo,
+  .opening-logo {
+    padding: 6px 12px;
+    font-size: 18px;
+    box-shadow: 4px 4px 0 #111;
+  }
+}
+</style>
 <script src="script.js"></script>
 </body>
 </html>
