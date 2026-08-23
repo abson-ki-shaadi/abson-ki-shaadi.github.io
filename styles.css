@@ -197,24 +197,6 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   .dress-note b{display:block;margin-top:8px;padding:8px 10px;line-height:1.55;}
 }
 
-/* Date visibility: make the wedding date clearly visible and bold. */
-.hero-date{color:#111 !important;font-weight:900 !important;text-shadow:none !important;position:relative;z-index:6;}
-
-/* Requested hero typography update: black + bold */
-.hero .kicker,
-.hero .name-strip,
-.hero .name-strip b,
-.hero .name-strip i {
-  color: #111 !important;
-  font-weight: 900 !important;
-  text-shadow: none !important;
-}
-.hero .name-strip i {
-  font-family: "DM Sans", Arial, sans-serif;
-  font-style: normal;
-  font-weight: 900 !important;
-}
-
 .guest-upload{background:#ffd447;padding-top:95px;padding-bottom:95px}
 .upload-card{max-width:850px;margin:auto;background:#fff;border:3px solid #171717;padding:45px;position:relative;box-shadow:12px 12px 0 #171717}
 .upload-stamp{display:inline-block;background:#171717;color:#ffd447;padding:8px 12px;font-size:11px;font-weight:900;letter-spacing:.12em;transform:rotate(-2deg);margin-bottom:20px}
@@ -849,48 +831,53 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   .hero-content .countdown small {
     font-size: 6px !important;
   }
-  /* =========================================================
-   FINAL MOBILE HERO TEXT COLOR FIX
+}
+
+
+/* =========================================================
+   FINAL MOBILE HERO COLOUR OVERRIDE
+   The previous desktop rules were forcing these elements black.
    ========================================================= */
 
 @media (max-width: 800px) {
-
-  /* Breaking News */
-  .hero .hero-content p.kicker,
-  .hero .hero-content .kicker {
-    color: #ffffff !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    text-shadow: 2px 2px 3px rgba(0,0,0,.45) !important;
-  }
-
-  /* Names */
+  .hero .hero-content .kicker,
   .hero .hero-content .name-strip,
   .hero .hero-content .name-strip b,
+  .hero .hero-content .name-strip i,
+  .hero .hero-content .hero-date {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-shadow: 2px 2px 4px rgba(0,0,0,.65) !important;
+  }
+
+  .hero .hero-content .kicker {
+    font-weight: 900 !important;
+  }
+
+  .hero .hero-content .name-strip {
+    font-weight: 900 !important;
+  }
+
   .hero .hero-content .name-strip i {
-    color: #ffffff !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    text-shadow: 2px 2px 3px rgba(0,0,0,.45) !important;
+    font-family: "DM Sans", Arial, sans-serif !important;
+    font-style: normal !important;
+    font-weight: 900 !important;
   }
 
-  /* Wedding date */
-  .hero .hero-content p.hero-date {
-    color: #ffffff !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    text-shadow: 2px 2px 3px rgba(0,0,0,.45) !important;
+  .hero .hero-content .hero-date {
+    font-weight: 900 !important;
+    letter-spacing: .14em !important;
   }
 
-  /* Make the whole hero content safely white */
-  .hero .hero-content {
-    color: #ffffff !important;
+  .hero .hero-content h1 {
+    color: #fff !important;
+    -webkit-text-fill-color: #fff !important;
   }
 
-  /* Keep the yellow word yellow */
   .hero .hero-content h1 span {
     color: var(--yellow) !important;
+    -webkit-text-fill-color: var(--yellow) !important;
   }
-
-}
 }
