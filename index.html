@@ -78,6 +78,157 @@
   }
 
 }
+
+/* =========================================================
+   FINAL LORE LAYOUT
+   Desktop: photo LEFT + story RIGHT
+   Mobile: photo TOP + story BELOW
+   ========================================================= */
+
+.lore-section {
+  position: relative !important;
+  overflow: hidden !important;
+  display: block !important;
+}
+
+.lore-section .lore-layout {
+  position: relative !important;
+  z-index: 2 !important;
+  width: min(1240px, 92vw) !important;
+  margin: 0 auto !important;
+
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.05fr) minmax(420px, .95fr) !important;
+  gap: clamp(45px, 6vw, 100px) !important;
+  align-items: center !important;
+}
+
+.lore-section .lore-visual {
+  grid-column: 1 !important;
+  grid-row: 1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+.lore-section .lore-copy {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+  width: 100% !important;
+  min-width: 0 !important;
+  align-self: center !important;
+}
+
+.lore-section .lore-copy h2 {
+  margin-top: 8px !important;
+}
+
+.lore-section .lore-intro {
+  max-width: 560px !important;
+}
+
+.lore-section .lore-photo-card {
+  width: min(100%, 620px) !important;
+  margin: 0 auto !important;
+}
+
+.lore-section .lore-photo-card img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 650px !important;
+  object-fit: cover !important;
+}
+
+.lore-section .lore-story-panel {
+  width: 100% !important;
+  box-sizing: border-box !important;
+}
+
+.lore-section .lore-controls {
+  width: 100% !important;
+  display: grid !important;
+  grid-template-columns: auto 1fr auto !important;
+  align-items: stretch !important;
+  gap: 8px !important;
+  margin-top: 20px !important;
+}
+
+.lore-section .lore-steps {
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 5px !important;
+  min-width: 0 !important;
+}
+
+.lore-section .lore-step {
+  min-width: 0 !important;
+  width: 100% !important;
+}
+
+.lore-section .lore-step small {
+  display: block !important;
+  white-space: normal !important;
+}
+
+.lore-section .lore-arrow {
+  flex-shrink: 0 !important;
+}
+
+/* Tablet */
+@media (max-width: 900px) and (min-width: 701px) {
+  .lore-section .lore-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(330px, .9fr) !important;
+    gap: 35px !important;
+  }
+
+  .lore-section .lore-copy h2 {
+    font-size: clamp(55px, 8vw, 90px) !important;
+  }
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .lore-section .lore-layout {
+    width: 90vw !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 42px !important;
+  }
+
+  .lore-section .lore-visual,
+  .lore-section .lore-copy {
+    width: 100% !important;
+  }
+
+  .lore-section .lore-visual {
+    order: 1 !important;
+  }
+
+  .lore-section .lore-copy {
+    order: 2 !important;
+  }
+
+  .lore-section .lore-photo-card {
+    width: 100% !important;
+    max-width: 620px !important;
+  }
+
+  .lore-section .lore-photo-card img {
+    max-height: none !important;
+  }
+
+  .lore-section .lore-controls {
+    grid-template-columns: 34px 1fr 34px !important;
+  }
+
+  .lore-section .lore-steps {
+    gap: 3px !important;
+  }
+}
+
 </style>
 
 </head>
@@ -324,95 +475,115 @@
 
   <div class="abson-watermark" aria-hidden="true">#ABSON</div>
 
-  <div class="lore-copy">
-    <p class="kicker">THE LORE</p>
+  <div class="lore-layout">
 
-    <h2>
-      HOW DID<br>
-      WE GET<br>
-      HERE?
-    </h2>
+    <!-- LEFT: PHOTO -->
+    <div class="lore-visual">
 
-    <p class="lore-intro">
-      A completely unbiased investigation into how two people
-      accidentally ended up planning a wedding.
-    </p>
+      <div class="lore-photo-card">
+        <div class="lore-photo-label">
+          EXHIBIT <span id="loreNumber">01</span>
+        </div>
 
-    <div class="lore-story-panel">
-      <div class="lore-counter">
-        <span id="loreCurrent">01</span>
-        <span>/ 05</span>
+        <img
+          id="loreImage"
+          src="01.png"
+          alt="Abhilasha and Noel"
+        >
+
+        <div class="lore-photo-stamp">
+          #ABSON
+        </div>
       </div>
 
-      <h3 id="loreTitle">WE MET.</h3>
+    </div>
 
-      <p id="loreText">
-        Two people met, started talking and somehow decided
-        this was a good idea.
+    <!-- RIGHT: STORY + CONTROLS -->
+    <div class="lore-copy">
+
+      <p class="kicker">THE LORE</p>
+
+      <h2>
+        HOW DID<br>
+        WE GET<br>
+        HERE?
+      </h2>
+
+      <p class="lore-intro">
+        A completely unbiased investigation into how two people
+        accidentally ended up planning a wedding.
       </p>
 
-      <div id="loreCaption" class="lore-caption">
-        Evidence suggests excessive laughter.
-      </div>
-    </div>
-  </div>
+      <div class="lore-story-panel">
 
-  <div class="lore-visual">
+        <div class="lore-counter">
+          <span id="loreCurrent">01</span>
+          <span>/ 05</span>
+        </div>
 
-    <div class="lore-photo-card">
-      <div class="lore-photo-label">
-        EXHIBIT <span id="loreNumber">01</span>
-      </div>
+        <h3 id="loreTitle">WE MET.</h3>
 
-      <img
-        id="loreImage"
-        src="01.png"
-        alt="Abhilasha and Noel"
-      >
+        <p id="loreText">
+          Two people met, started talking and somehow decided
+          this was a good idea.
+        </p>
 
-      <div class="lore-photo-stamp">
-        #ABSON
-      </div>
-    </div>
-
-    <div class="lore-controls">
-
-      <button class="lore-arrow" id="lorePrev" type="button" aria-label="Previous chapter">
-        ←
-      </button>
-
-      <div class="lore-steps">
-
-        <button class="lore-step active" data-step="0" type="button">
-          <span>01</span>
-          <small>WE MET</small>
-        </button>
-
-        <button class="lore-step" data-step="1" type="button">
-          <span>02</span>
-          <small>THE CHAOS</small>
-        </button>
-
-        <button class="lore-step" data-step="2" type="button">
-          <span>03</span>
-          <small>IT GOT SERIOUS</small>
-        </button>
-
-        <button class="lore-step" data-step="3" type="button">
-          <span>04</span>
-          <small>THE QUESTION</small>
-        </button>
-
-        <button class="lore-step" data-step="4" type="button">
-          <span>05</span>
-          <small>#ABSON</small>
-        </button>
+        <div id="loreCaption" class="lore-caption">
+          Evidence suggests excessive laughter.
+        </div>
 
       </div>
 
-      <button class="lore-arrow" id="loreNext" type="button" aria-label="Next chapter">
-        →
-      </button>
+      <div class="lore-controls">
+
+        <button
+          class="lore-arrow"
+          id="lorePrev"
+          type="button"
+          aria-label="Previous chapter"
+        >
+          ←
+        </button>
+
+        <div class="lore-steps">
+
+          <button class="lore-step active" data-step="0" type="button">
+            <span>01</span>
+            <small>WE MET</small>
+          </button>
+
+          <button class="lore-step" data-step="1" type="button">
+            <span>02</span>
+            <small>THE CHAOS</small>
+          </button>
+
+          <button class="lore-step" data-step="2" type="button">
+            <span>03</span>
+            <small>IT GOT SERIOUS</small>
+          </button>
+
+          <button class="lore-step" data-step="3" type="button">
+            <span>04</span>
+            <small>THE QUESTION</small>
+          </button>
+
+          <button class="lore-step" data-step="4" type="button">
+            <span>05</span>
+            <small>#ABSON</small>
+          </button>
+
+        </div>
+
+        <button
+          class="lore-arrow"
+          id="loreNext"
+          type="button"
+          aria-label="Next chapter"
+        >
+          →
+        </button>
+
+      </div>
 
     </div>
 
