@@ -301,4 +301,60 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   .fake-stats > * {
     overflow: hidden;
   }
+  /* =========================================
+   #ABSON WATERMARK
+   ========================================= */
+
+.abson-watermark {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+
+  font-family: "Arial Black", Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -0.06em;
+  line-height: 0.8;
+
+  color: #111;
+  opacity: 0.07;
+
+  font-size: clamp(80px, 14vw, 200px);
+  white-space: nowrap;
+
+  transform: rotate(-8deg);
+}
+
+/* Keep actual content above the watermark */
+.hero,
+.intro,
+.story,
+.events,
+.gallery,
+.venue,
+.guest-upload,
+.rsvp {
+  position: relative;
+}
+
+.hero > *,
+.intro > *,
+.story > *,
+.events > *,
+.gallery > *,
+.venue > *,
+.guest-upload > *,
+.rsvp > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .abson-watermark {
+    font-size: 75px;
+    opacity: 0.06;
+  }
+}
 }
