@@ -320,26 +320,13 @@
 </section>
 
 
-<section class="story section" id="story">
+<section class="story section lore-section" id="story">
 
   <div class="abson-watermark" aria-hidden="true">
     #ABSON
   </div>
 
-  <div class="story-image polaroid">
-
-    <span class="photo-label">
-      EXHIBIT A
-    </span>
-
-    <img
-      src="01.png"
-      alt="Abhilasha and Noel"
-    >
-
-  </div>
-
-  <div class="story-copy">
+  <div class="section-heading lore-heading">
 
     <p class="kicker">
       THE LORE
@@ -350,24 +337,128 @@
     </h2>
 
     <p>
-      <b>Step 01:</b> Met.
-      <b>Step 02:</b> Laughed a suspicious amount.
-      <b>Step 03:</b> Started making memories.
-      <b>Step 04:</b> Realised everyone had already started calling
-      us a unit.
+      A completely unbiased investigation into how two people
+      accidentally ended up planning a wedding.
     </p>
-
-    <p>
-      So, naturally, we did the most reasonable thing possible:
-      <em>we're getting married.</em>
-    </p>
-
-    <div class="speech">
-      <span>ABHILASHA:</span> “Are you sure?”<br>
-      <span>SOVON:</span> “Too late. I told everyone.”
-    </div>
 
   </div>
+
+
+  <div class="lore-container">
+
+    <!-- PHOTO -->
+
+    <div class="lore-photo-wrap">
+
+      <div class="lore-photo-label">
+        EXHIBIT <span id="loreNumber">01</span>
+      </div>
+
+      <img
+        id="loreImage"
+        src="01.png"
+        alt="The ABSON story"
+        class="lore-photo"
+      >
+
+      <div class="lore-photo-stamp">
+        #ABSON
+      </div>
+
+    </div>
+
+
+    <!-- STORY -->
+
+    <div class="lore-story">
+
+      <div class="lore-counter">
+        <span id="loreCurrent">01</span>
+        <span>/</span>
+        <span>05</span>
+      </div>
+
+      <h3 id="loreTitle">
+        WE MET.
+      </h3>
+
+      <p id="loreText">
+        Two people met, started talking and somehow decided
+        this was a good idea.
+      </p>
+
+      <div class="lore-caption" id="loreCaption">
+        Evidence suggests excessive laughter.
+      </div>
+
+    </div>
+
+
+    <!-- TIMELINE -->
+
+    <div class="lore-timeline">
+
+      <button
+        class="lore-step active"
+        data-step="0"
+        type="button"
+      >
+        <span>01</span>
+        <strong>WE MET</strong>
+      </button>
+
+      <button
+        class="lore-step"
+        data-step="1"
+        type="button"
+      >
+        <span>02</span>
+        <strong>THE CHAOS</strong>
+      </button>
+
+      <button
+        class="lore-step"
+        data-step="2"
+        type="button"
+      >
+        <span>03</span>
+        <strong>IT GOT SERIOUS</strong>
+      </button>
+
+      <button
+        class="lore-step"
+        data-step="3"
+        type="button"
+      >
+        <span>04</span>
+        <strong>THE QUESTION</strong>
+      </button>
+
+      <button
+        class="lore-step"
+        data-step="4"
+        type="button"
+      >
+        <span>05</span>
+        <strong>#ABSON</strong>
+      </button>
+
+    </div>
+
+
+    <!-- NEXT BUTTON -->
+
+    <button
+      class="lore-next"
+      id="loreNext"
+      type="button"
+    >
+      NEXT CHAPTER →
+    </button>
+
+  </div>
+
+</section>
 
 </section>
 
