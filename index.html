@@ -117,5 +117,113 @@
 }
 </style>
 <script src="script.js"></script>
+  <style>
+/* =========================================
+   #ABSON OFFICIAL WEDDING LOGO
+   ========================================= */
+
+.abson-logo {
+  display: inline-block;
+  box-sizing: border-box;
+  background: #f8f1e5;
+  color: #111;
+  border: 2px solid #111;
+  box-shadow: 6px 6px 0 #111;
+  padding: 7px 16px 8px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.95em;
+  font-weight: 900;
+  font-style: italic;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  white-space: nowrap;
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .abson-logo {
+    padding: 6px 12px 7px;
+    font-size: 0.9em;
+    box-shadow: 4px 4px 0 #111;
+  }
+}
+</style>
+
+<script>
+/* Automatically turn every visible #ABSON into the official logo */
+(function () {
+  const walker = document.createTreeWalker(
+    document.body,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode(node) {
+        const parent = node.parentElement;
+        if (!parent) return NodeFilter.FILTER_REJECT;
+
+        const tag = parent.tagName.toLowerCase();
+
+        if (
+          tag === "script" ||
+          tag === "style" ||
+          tag === "title" ||
+          tag === "textarea"
+        ) {
+          return NodeFilter.FILTER_REJECT;
+        }
+
+        return node.nodeValue.includes("#ABSON")
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_REJECT;
+      }
+    }
+  );
+
+  const nodes = [];
+
+  while (walker.nextNode()) {
+    nodes.push(walker.currentNode);
+  }
+
+  nodes.forEach(node => {
+    const text = node.nodeValue;
+    const parts = text.split("#ABSON");
+    const fragment = document.createDocumentFragment();
+
+    parts.forEach((part, index) => {
+      if (part) {
+        fragment.appendChild(document.createTextNode(part));
+      }
+
+      if (index < parts.length - 1) {
+        const logo = document.createElement("span");
+        logo.className = "abson-logo";
+        logo.textContent = "#ABSON";
+        fragment.appendChild(logo);
+      }
+    });
+
+    node.parentNode.replaceChild(fragment, node);
+  });
+
+  /* Replace the old quote */
+  document.querySelectorAll("p").forEach(p => {
+    if (
+      p.textContent.trim() ===
+      "Marriage is basically choosing your favourite person to annoy for the rest of your life."
+    ) {
+      p.textContent =
+        "We could have kept this between us. But apparently, we needed 300 witnesses.";
+    }
+  });
+
+  /* Replace the old quote attribution */
+  document.querySelectorAll("small").forEach(s => {
+    if (s.textContent.includes("probably us, eventually")) {
+      s.innerHTML =
+        '— <span class="abson-logo">#ABSON</span> · 09.01.2027';
+    }
+  });
+})();
+</script>
 </body>
 </html>
