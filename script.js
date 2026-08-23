@@ -200,6 +200,201 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 2200);
 
     }
+    /* =========================================================
+   #ABSON — INTERACTIVE LORE
+   ========================================================= */
+
+document.addEventListener("DOMContentLoaded", function () {
+
+  const loreData = [
+
+    {
+      image: "01.png",
+      title: "WE MET.",
+      text:
+        "Two people met, started talking and somehow decided this was a good idea.",
+      caption:
+        "Evidence suggests excessive laughter."
+    },
+
+    {
+      image: "02.png",
+      title: "THE CHAOS.",
+      text:
+        "Somewhere between the jokes, food and questionable decisions, things got serious.",
+      caption:
+        "No responsible adults were involved."
+    },
+
+    {
+      image: "03.jpeg",
+      title: "IT GOT SERIOUS.",
+      text:
+        "Then came the dates, the memories and the tiny realisation that this wasn't just another chapter.",
+      caption:
+        "Plot development detected."
+    },
+
+    {
+      image: "04.jpeg",
+      title: "THE QUESTION.",
+      text:
+        "One question was asked. One answer was given. And suddenly everyone had opinions.",
+      caption:
+        "Family group chats went into overdrive."
+    },
+
+    {
+      image: "05.jpeg",
+      title: "#ABSON.",
+      text:
+        "And now here we are. Two people, one wedding and approximately 300 witnesses.",
+      caption:
+        "No refunds. 09.01.2027."
+    }
+
+  ];
+
+
+  const image = document.getElementById("loreImage");
+  const title = document.getElementById("loreTitle");
+  const text = document.getElementById("loreText");
+  const caption = document.getElementById("loreCaption");
+
+  const number = document.getElementById("loreNumber");
+  const current = document.getElementById("loreCurrent");
+
+  const steps = document.querySelectorAll(".lore-step");
+  const next = document.getElementById("loreNext");
+
+
+  if (
+    !image ||
+    !title ||
+    !text ||
+    !caption ||
+    !steps.length
+  ) {
+    return;
+  }
+
+
+  let currentStep = 0;
+
+
+  function showLore(step) {
+
+    const item = loreData[step];
+
+    if (!item) return;
+
+    currentStep = step;
+
+
+    /* Animate image out */
+
+    image.classList.add("changing");
+
+
+    setTimeout(function () {
+
+      image.src = item.image;
+      image.alt = item.title;
+
+      title.textContent = item.title;
+      text.textContent = item.text;
+      caption.textContent = item.caption;
+
+      const displayNumber =
+        String(step + 1).padStart(2, "0");
+
+      number.textContent = displayNumber;
+      current.textContent = displayNumber;
+
+
+      image.classList.remove("changing");
+
+    }, 180);
+
+
+    /* Active button */
+
+    steps.forEach(function (button, index) {
+
+      button.classList.toggle(
+        "active",
+        index === step
+      );
+
+    });
+
+
+    /* Update next button */
+
+    if (step === loreData.length - 1) {
+
+      next.textContent =
+        "START AGAIN ↻";
+
+    } else {
+
+      next.textContent =
+        "NEXT CHAPTER →";
+
+    }
+
+  }
+
+
+  /* Timeline buttons */
+
+  steps.forEach(function (button) {
+
+    button.addEventListener(
+      "click",
+      function () {
+
+        const step =
+          Number(button.dataset.step);
+
+        showLore(step);
+
+      }
+    );
+
+  });
+
+
+  /* Next button */
+
+  if (next) {
+
+    next.addEventListener(
+      "click",
+      function () {
+
+        let nextStep =
+          currentStep + 1;
+
+        if (
+          nextStep >= loreData.length
+        ) {
+          nextStep = 0;
+        }
+
+        showLore(nextStep);
+
+      }
+    );
+
+  }
+
+
+  /* Initial state */
+
+  showLore(0);
+
+});
 
   }
 
