@@ -39,6 +39,7 @@
   transform: rotate(-8deg);
 }
 
+/* Keep section content above the watermark */
 .intro,
 .story,
 .events,
@@ -58,6 +59,7 @@
   z-index: 1;
 }
 
+/* Small #ABSON text used inside normal copy */
 .abson-mark {
   font-family: "Arial Black", Arial, Helvetica, sans-serif;
   font-weight: 900;
@@ -66,307 +68,13 @@
   color: #111;
 }
 
-
-/* =========================================================
-   #ABSON — CLEAN LORE SECTION
-   ========================================================= */
-
-.story.lore-section {
-  position: relative;
-
-  background: var(--blue);
-  color: #fff;
-
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-
-  gap: 7vw;
-  align-items: center;
-
-  min-height: 720px;
-
-  overflow: hidden;
-
-  padding: 110px 7vw;
-}
-
-
-/* WATERMARK */
-
-.story.lore-section .abson-watermark {
-  z-index: 0;
-
-  left: -30px;
-  top: 50%;
-
-  transform: translateY(-50%) rotate(-8deg);
-
-  color: #111;
-  opacity: .07;
-
-  font-size: clamp(100px, 16vw, 230px);
-}
-
-
-/* PHOTO */
-
-.story.lore-section .story-image {
-  position: relative;
-  z-index: 2;
-
-  width: 100%;
-  max-width: 620px;
-
-  background: var(--paper);
-
-  padding: 14px 14px 48px;
-
-  border: 3px solid var(--ink);
-
-  box-shadow: 12px 12px 0 var(--ink);
-
-  transform: rotate(-2deg);
-
-  justify-self: end;
-}
-
-.story.lore-section .story-image img {
-  display: block;
-
-  width: 100%;
-  height: 560px;
-
-  object-fit: cover;
-
-  cursor: zoom-in;
-}
-
-.story.lore-section .photo-label {
-  position: absolute;
-
-  left: 18px;
-  bottom: 14px;
-
-  color: var(--ink);
-
-  font-family: "Bebas Neue", sans-serif;
-
-  font-size: 16px;
-
-  letter-spacing: .08em;
-}
-
-
-/* TEXT */
-
-.story.lore-section .story-copy {
-  position: relative;
-  z-index: 2;
-
-  width: min(520px, 100%);
-
-  justify-self: start;
-}
-
-.story.lore-section .story-copy .kicker {
-  color: #fff;
-
-  font-size: 10px;
-  font-weight: 900;
-
-  letter-spacing: .25em;
-}
-
-.story.lore-section .story-copy h2 {
-  margin: 18px 0 25px;
-
-  color: #fff;
-
-  font-family: "Bebas Neue", sans-serif;
-
-  font-size: clamp(4rem, 7vw, 7rem);
-
-  line-height: .78;
-
-  letter-spacing: .02em;
-}
-
-.story.lore-section .story-copy p:not(.kicker) {
-  max-width: 500px;
-
-  color: #fff;
-
-  font-size: 16px;
-
-  line-height: 1.8;
-}
-
-
-/* CASE FILE */
-
-.story.lore-section .speech {
-  display: inline-block;
-
-  margin-top: 25px;
-
-  max-width: 430px;
-
-  background: var(--yellow);
-
-  color: var(--ink);
-
-  border: 2px solid var(--ink);
-
-  padding: 18px 22px;
-
-  font-size: 14px;
-
-  line-height: 1.6;
-
-  font-weight: 700;
-
-  box-shadow: 6px 6px 0 var(--ink);
-
-  transform: rotate(1deg);
-}
-
-.story.lore-section .speech span {
-  font-size: 9px;
-
-  font-weight: 900;
-
-  letter-spacing: .12em;
-}
-
-
-/* =========================================================
-   MOBILE
-   ========================================================= */
-
-@media (max-width: 800px) {
+/* Mobile */
+@media (max-width: 700px) {
 
   .abson-watermark {
     font-size: 75px;
-
     opacity: 0.055;
-
     transform: rotate(-6deg);
-  }
-
-
-  .story.lore-section {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 45px;
-
-    padding: 80px 5vw;
-
-    min-height: auto;
-
-    align-items: stretch;
-  }
-
-
-  .story.lore-section .abson-watermark {
-    left: -15px;
-
-    top: 180px;
-
-    font-size: 90px;
-
-    opacity: .055;
-  }
-
-
-  .story.lore-section .story-image {
-    width: calc(100% - 10px);
-
-    max-width: none;
-
-    margin: 10px 5px 0;
-
-    padding: 9px 9px 38px;
-
-    box-shadow: 7px 7px 0 var(--ink);
-
-    transform: rotate(-1deg);
-  }
-
-
-  .story.lore-section .story-image img {
-    width: 100%;
-
-    height: 430px;
-
-    object-fit: cover;
-  }
-
-
-  .story.lore-section .photo-label {
-    left: 12px;
-
-    bottom: 10px;
-
-    font-size: 13px;
-  }
-
-
-  .story.lore-section .story-copy {
-    width: 100%;
-
-    justify-self: auto;
-  }
-
-
-  .story.lore-section .story-copy h2 {
-    font-size: clamp(4rem, 16vw, 6rem);
-
-    line-height: .8;
-
-    margin: 15px 0 25px;
-  }
-
-
-  .story.lore-section .story-copy p:not(.kicker) {
-    font-size: 15px;
-
-    line-height: 1.65;
-  }
-
-
-  .story.lore-section .speech {
-    width: 100%;
-
-    max-width: none;
-
-    font-size: 13px;
-  }
-
-}
-
-
-/* =========================================================
-   SMALL PHONES
-   ========================================================= */
-
-@media (max-width: 420px) {
-
-  .story.lore-section {
-    padding: 70px 5vw;
-
-    gap: 35px;
-  }
-
-
-  .story.lore-section .story-image img {
-    height: 360px;
-  }
-
-
-  .story.lore-section .story-copy h2 {
-    font-size: 3.8rem;
   }
 
 }
@@ -378,120 +86,55 @@
 
 <div class="grain"></div>
 
-
-<!-- =========================================================
-     OPENING
-     ========================================================= -->
-
 <div class="opening" id="opening">
 
   <div class="opening-stars"></div>
-
   <div class="opening-orbit orbit-a"></div>
-
   <div class="opening-orbit orbit-b"></div>
 
-
   <div class="news-strip top-strip">
-
     <span>🚨 BREAKING NEWS</span>
-
     <span>KOLKATA</span>
-
     <span>100% CONFIRMED</span>
-
   </div>
 
-
-  <div class="opening-sticker sticker-confirmed">
-    100% REAL
-  </div>
-
-  <div class="opening-sticker sticker-plot">
-    PLOT TWIST!
-  </div>
-
-  <div class="opening-sticker sticker-norefunds">
-    NO REFUNDS
-  </div>
-
+  <div class="opening-sticker sticker-confirmed">100% REAL</div>
+  <div class="opening-sticker sticker-plot">PLOT TWIST!</div>
+  <div class="opening-sticker sticker-norefunds">NO REFUNDS</div>
 
   <div class="opening-content">
 
-    <div class="opening-hash">
-      #ABSON
-    </div>
-
+    <div class="opening-hash">#ABSON</div>
 
     <div class="opening-label">
       SPECIAL EDITION · WEDDING NEWS
     </div>
 
-
     <div class="breaking-headline">
-
-      <span>
-        BREAKING:
-      </span>
-
+      <span>BREAKING:</span>
       <strong>
-
         THEY'RE<br>
-
-        <em>
-          ACTUALLY
-        </em><br>
-
+        <em>ACTUALLY</em><br>
         GETTING MARRIED.
-
       </strong>
-
     </div>
-
 
     <div class="opening-names">
-
-      <span>
-        Abhilasha
-      </span>
-
-      <span class="amp">
-        &amp;
-      </span>
-
-      <span>
-        Noel
-      </span>
-
+      <span>Abhilasha</span>
+      <span class="amp">&amp;</span>
+      <span>Noel</span>
     </div>
-
 
     <div class="opening-meta">
-
-      <span>
-        09 · 01 · 2027
-      </span>
-
-      <b>
-        •
-      </b>
-
-      <span>
-        PARK STREET, KOLKATA
-      </span>
-
+      <span>09 · 01 · 2027</span>
+      <b>•</b>
+      <span>PARK STREET, KOLKATA</span>
     </div>
-
 
     <div class="breaking-caption">
-
-      FAMILY GROUP CHATS ARE ACTIVE ·
-      NOEL PRETENDED TO BE CALM ·
-      ABHILASHA SAID YES ·
-      #ABSON IS NOW A THING
-
+      FAMILY GROUP CHATS ARE ACTIVE · NOEL PRETENDED TO BE CALM ·
+      ABHILASHA SAID YES · #ABSON IS NOW A THING
     </div>
-
 
     <button id="enterBtn">
       OKAY, SHOW ME THE CHAOS →
@@ -499,103 +142,45 @@
 
   </div>
 
-
   <div class="opening-bottom-ticker">
-
-    <span>
-      LIVE UPDATE:
-    </span>
-
+    <span>LIVE UPDATE:</span>
     WEDDING PLANS ARE OFFICIALLY OUT OF CONTROL ·
     KEEP SCROLLING FOR EVIDENCE
-
   </div>
 
 </div>
 
 
-
-<!-- =========================================================
-     NAVIGATION
-     ========================================================= -->
-
 <header class="nav">
 
   <a class="brand" href="#home">
-
     #ABSON<span>®</span>
-
   </a>
 
-
   <nav>
-
-    <a href="#story">
-      THE LORE
-    </a>
-
-    <a href="#events">
-      THE PLAN
-    </a>
-
-    <a href="#gallery">
-      THE EVIDENCE
-    </a>
-
-    <a href="#guest-photos">
-      Upload Photos
-    </a>
-
-    <a href="#rsvp">
-      RSVP
-    </a>
-
+    <a href="#story">THE LORE</a>
+    <a href="#events">THE PLAN</a>
+    <a href="#gallery">THE EVIDENCE</a>
+    <a href="#guest-photos">Upload Photos</a>
+    <a href="#rsvp">RSVP</a>
   </nav>
 
-
-  <button
-    class="music-btn"
-    id="musicBtn"
-  >
+  <button class="music-btn" id="musicBtn">
     ♪ MUSIC
   </button>
 
 </header>
 
 
-
-<!-- =========================================================
-     MAIN
-     ========================================================= -->
-
 <main>
 
-
-<!-- =========================================================
-     HERO
-     ========================================================= -->
-
-<section
-  class="hero"
-  id="home"
->
+<section class="hero" id="home">
 
   <div class="hero-stickers">
-
-    <span class="sticker one">
-      PLOT TWIST!
-    </span>
-
-    <span class="sticker two">
-      NO REFUNDS
-    </span>
-
-    <span class="sticker three">
-      100% REAL
-    </span>
-
+    <span class="sticker one">PLOT TWIST!</span>
+    <span class="sticker two">NO REFUNDS</span>
+    <span class="sticker three">100% REAL</span>
   </div>
-
 
   <img
     src="cover.jpg"
@@ -603,9 +188,7 @@
     class="hero-photo"
   >
 
-
   <div class="hero-tint"></div>
-
 
   <div class="hero-content">
 
@@ -613,119 +196,60 @@
       BREAKING NEWS · KOLKATA
     </p>
 
-
     <h1>
-
       WE ARE<br>
-
-      <span>
-        GETTING
-      </span><br>
-
+      <span>GETTING</span><br>
       MARRIED.
-
     </h1>
 
-
     <div class="name-strip">
-
-      <b>
-        Abhilasha
-      </b>
-
-      <i>
-        +
-      </i>
-
-      <b>
-        Noel
-      </b>
-
+      <b>Abhilasha</b>
+      <i>+</i>
+      <b>Noel</b>
     </div>
-
 
     <p class="hero-date">
       09 / 01 / 2027 · PARK STREET
     </p>
 
-
     <div class="countdown-wrap">
 
       <span>
-
         TIME UNTIL WE LOSE THE ABILITY TO SAY
         “IT'S JUST A DATE”
-
       </span>
-
 
       <div class="countdown">
 
         <div>
-
-          <strong id="days">
-            00
-          </strong>
-
-          <small>
-            DAYS
-          </small>
-
+          <strong id="days">00</strong>
+          <small>DAYS</small>
         </div>
 
-
         <div>
-
-          <strong id="hours">
-            00
-          </strong>
-
-          <small>
-            HRS
-          </small>
-
+          <strong id="hours">00</strong>
+          <small>HRS</small>
         </div>
 
-
         <div>
-
-          <strong id="minutes">
-            00
-          </strong>
-
-          <small>
-            MIN
-          </small>
-
+          <strong id="minutes">00</strong>
+          <small>MIN</small>
         </div>
 
-
         <div>
-
-          <strong id="seconds">
-            00
-          </strong>
-
-          <small>
-            SEC
-          </small>
-
+          <strong id="seconds">00</strong>
+          <small>SEC</small>
         </div>
 
       </div>
 
     </div>
 
-
-    <a
-      class="cta"
-      href="#events"
-    >
+    <a class="cta" href="#events">
       SHOW ME THE PLAN ↓
     </a>
 
   </div>
-
 
   <div class="scroll-note">
     KEEP SCROLLING · THERE IS MORE CHAOS
@@ -734,258 +258,184 @@
 </section>
 
 
-
-<!-- =========================================================
-     TICKER
-     ========================================================= -->
-
 <div class="ticker">
-
   <div>
-
-    BREAKING:
-    ABHILASHA SAID YES ·
-
+    BREAKING: ABHILASHA SAID YES ·
     NOEL PRETENDED TO BE CALM ·
-
     FAMILY GROUP CHATS ARE ACTIVE ·
-
     #ABSON IS NOW A THING ·
-
   </div>
-
 </div>
 
 
-
-<!-- =========================================================
-     INTRO
-     ========================================================= -->
-
 <section class="intro section">
 
-  <div
-    class="abson-watermark"
-    aria-hidden="true"
-  >
+  <div class="abson-watermark" aria-hidden="true">
     #ABSON
   </div>
-
 
   <div class="stamp">
     TRUE STORY
   </div>
 
-
   <p class="kicker">
     A LOVE STORY, ALLEGEDLY
   </p>
 
-
   <h2>
-
     Somehow this became<br>
-
-    <em>
-      a wedding website.
-    </em>
-
+    <em>a wedding website.</em>
   </h2>
 
-
   <p class="lead">
-
     It started with two people, a lot of laughter and absolutely no
     master plan. Then came dates, food, photos, family opinions and
     the realisation that this is, in fact, happening.
-
   </p>
-
 
   <div class="fake-stats">
 
-
     <div>
-
-      <b>
-        ∞
-      </b>
-
-      <span>
-        inside jokes
-      </span>
-
+      <b>∞</b>
+      <span>inside jokes</span>
     </div>
 
-
     <div>
-
-      <b>
-        2
-      </b>
-
-      <span>
-        people responsible
-      </span>
-
+      <b>2</b>
+      <span>people responsible</span>
     </div>
 
-
     <div>
-
-      <b>
-        1
-      </b>
-
-      <span>
-        very big day
-      </span>
-
+      <b>1</b>
+      <span>very big day</span>
     </div>
 
-
     <div>
-
-      <b>
-        #ABSON
-      </b>
-
-      <span>
-        officially unavoidable
-      </span>
-
+      <b>#ABSON</b>
+      <span>officially unavoidable</span>
     </div>
-
 
   </div>
 
 </section>
 
 
+<section class="story section lore-section" id="story">
 
-<!-- =========================================================
-     THE LORE
-     ========================================================= -->
+  <div class="abson-watermark" aria-hidden="true">#ABSON</div>
 
-<section
-  class="story section lore-section"
-  id="story"
->
-
-
-  <div
-    class="abson-watermark"
-    aria-hidden="true"
-  >
-    #ABSON
-  </div>
-
-
-  <div class="story-image">
-
-    <img
-      src="01.png"
-      alt="Abhilasha and Noel"
-    >
-
-
-    <div class="photo-label">
-      EXHIBIT 01 · THE BEGINNING
-    </div>
-
-  </div>
-
-
-  <div class="story-copy">
-
-
-    <p class="kicker">
-      THE LORE
-    </p>
-
+  <div class="lore-copy">
+    <p class="kicker">THE LORE</p>
 
     <h2>
-
       HOW DID<br>
-
       WE GET<br>
-
       HERE?
-
     </h2>
 
-
-    <p>
-
+    <p class="lore-intro">
       A completely unbiased investigation into how two people
       accidentally ended up planning a wedding.
-
     </p>
 
+    <div class="lore-story-panel">
+      <div class="lore-counter">
+        <span id="loreCurrent">01</span>
+        <span>/ 05</span>
+      </div>
 
-    <p>
+      <h3 id="loreTitle">WE MET.</h3>
 
-      Two people met, started talking and somehow decided
-      this was a good idea.
+      <p id="loreText">
+        Two people met, started talking and somehow decided
+        this was a good idea.
+      </p>
 
-    </p>
+      <div id="loreCaption" class="lore-caption">
+        Evidence suggests excessive laughter.
+      </div>
+    </div>
+  </div>
 
+  <div class="lore-visual">
 
-    <div class="speech">
+    <div class="lore-photo-card">
+      <div class="lore-photo-label">
+        EXHIBIT <span id="loreNumber">01</span>
+      </div>
 
-      <span>
-        CASE FILE #01
-      </span>
+      <img
+        id="loreImage"
+        src="01.png"
+        alt="Abhilasha and Noel"
+      >
 
-      <br>
-
-      Evidence suggests excessive laughter.
-
+      <div class="lore-photo-stamp">
+        #ABSON
+      </div>
     </div>
 
+    <div class="lore-controls">
+
+      <button class="lore-arrow" id="lorePrev" type="button" aria-label="Previous chapter">
+        ←
+      </button>
+
+      <div class="lore-steps">
+
+        <button class="lore-step active" data-step="0" type="button">
+          <span>01</span>
+          <small>WE MET</small>
+        </button>
+
+        <button class="lore-step" data-step="1" type="button">
+          <span>02</span>
+          <small>THE CHAOS</small>
+        </button>
+
+        <button class="lore-step" data-step="2" type="button">
+          <span>03</span>
+          <small>IT GOT SERIOUS</small>
+        </button>
+
+        <button class="lore-step" data-step="3" type="button">
+          <span>04</span>
+          <small>THE QUESTION</small>
+        </button>
+
+        <button class="lore-step" data-step="4" type="button">
+          <span>05</span>
+          <small>#ABSON</small>
+        </button>
+
+      </div>
+
+      <button class="lore-arrow" id="loreNext" type="button" aria-label="Next chapter">
+        →
+      </button>
+
+    </div>
 
   </div>
 
 </section>
 
+<section class="events section" id="events">
 
-
-<!-- =========================================================
-     EVENTS
-     ========================================================= -->
-
-<section
-  class="events section"
-  id="events"
->
-
-
-  <div
-    class="abson-watermark"
-    aria-hidden="true"
-  >
+  <div class="abson-watermark" aria-hidden="true">
     #ABSON
   </div>
 
-
   <div class="section-heading">
-
 
     <p class="kicker">
       THE MASTER PLAN
     </p>
 
-
     <h2>
-
       Save the date.<br>
-
-      <em>
-        Bring your dancing shoes.
-      </em>
-
+      <em>Bring your dancing shoes.</em>
     </h2>
-
 
     <p>
       One day. Two stops. Zero chance of going home early.
@@ -994,51 +444,27 @@
   </div>
 
 
-
   <div class="event-grid">
-
 
     <article class="event-card">
 
-
       <div class="event-top">
-
-        <span>
-          MISSION 01
-        </span>
-
-        <b>
-          03:00 PM+
-        </b>
-
+        <span>MISSION 01</span>
+        <b>03:00 PM+</b>
       </div>
 
-
-      <div class="event-icon">
-        💍
-      </div>
-
+      <div class="event-icon">💍</div>
 
       <p class="event-type">
         THE “WE ACTUALLY DID IT” PART
       </p>
 
-
-      <h3>
-        Wedding
-      </h3>
-
+      <h3>Wedding</h3>
 
       <p>
-
-        <strong>
-          St Thomas Church
-        </strong><br>
-
+        <strong>St Thomas Church</strong><br>
         Park Street, Kolkata
-
       </p>
-
 
       <a
         class="map-link"
@@ -1049,52 +475,28 @@
         I'M LOST → MAP
       </a>
 
-
     </article>
-
 
 
     <article class="event-card hot">
 
-
       <div class="event-top">
-
-        <span>
-          MISSION 02
-        </span>
-
-        <b>
-          06:00 PM+
-        </b>
-
+        <span>MISSION 02</span>
+        <b>06:00 PM+</b>
       </div>
 
-
-      <div class="event-icon">
-        🕺
-      </div>
-
+      <div class="event-icon">🕺</div>
 
       <p class="event-type">
         THE “ONE MORE SONG” PART
       </p>
 
-
-      <h3>
-        Reception
-      </h3>
-
+      <h3>Reception</h3>
 
       <p>
-
-        <strong>
-          The Terrace
-        </strong><br>
-
+        <strong>The Terrace</strong><br>
         Park Street, Kolkata
-
       </p>
-
 
       <a
         class="map-link"
@@ -1105,281 +507,149 @@
         I'M STILL LOST → MAP
       </a>
 
-
     </article>
-
 
   </div>
 
 
-
   <p class="dress-note">
-
     DRESS CODE:
-
     <b>
-
-      MEN → GREY.
-      WOMEN → NAVY BLUE.
-
-      GET IT RIGHT.
-      WE'VE ALREADY DONE ENOUGH PLANNING.
-
+      MEN → GREY. WOMEN → NAVY BLUE.
+      GET IT RIGHT. WE'VE ALREADY DONE ENOUGH PLANNING.
     </b>
-
   </p>
-
 
 </section>
 
 
-
-<!-- =========================================================
-     QUOTE
-     ========================================================= -->
-
 <div class="quote-card">
 
-
-  <div
-    class="abson-watermark"
-    aria-hidden="true"
-  >
+  <div class="abson-watermark" aria-hidden="true">
     #ABSON
   </div>
-
 
   <span class="quote-mark">
     “
   </span>
 
-
   <p>
-
     We could have kept this between us.
-
     But apparently, we needed 300 witnesses.
-
   </p>
 
-
   <small>
-
-    —
-    <span class="abson-mark">
-      #ABSON
-    </span>
-    · 09.01.2027
-
+    — <span class="abson-mark">#ABSON</span> · 09.01.2027
   </small>
-
 
 </div>
 
 
+<section class="gallery section" id="gallery">
 
-<!-- =========================================================
-     GALLERY
-     ========================================================= -->
-
-<section
-  class="gallery section"
-  id="gallery"
->
-
-
-  <div
-    class="abson-watermark"
-    aria-hidden="true"
-  >
+  <div class="abson-watermark" aria-hidden="true">
     #ABSON
   </div>
 
-
   <div class="section-heading">
-
 
     <p class="kicker">
       THE EVIDENCE
     </p>
 
-
     <h2>
       Exhibit A through I.
     </h2>
-
 
     <p>
       Every picture appears once. We checked. Twice.
     </p>
 
-
   </div>
-
 
 
   <div class="gallery-grid">
 
-
     <figure class="gallery-photo p1">
-
-      <img
-        src="02.png"
-        alt="ABSON memory 1"
-      >
-
+      <img src="02.png" alt="ABSON memory 1">
       <figcaption>
         Evidence #01 · suspiciously cute
       </figcaption>
-
     </figure>
 
-
     <figure class="gallery-photo p2">
-
-      <img
-        src="03.jpeg"
-        alt="ABSON memory 2"
-      >
-
+      <img src="03.jpeg" alt="ABSON memory 2">
       <figcaption>
         Evidence #02 · no context needed
       </figcaption>
-
     </figure>
 
-
     <figure class="gallery-photo p3">
-
-      <img
-        src="04.jpeg"
-        alt="ABSON memory 3"
-      >
-
+      <img src="04.jpeg" alt="ABSON memory 3">
       <figcaption>
         Evidence #03 · main character energy
       </figcaption>
-
     </figure>
 
-
     <figure class="gallery-photo p4">
-
-      <img
-        src="05.jpeg"
-        alt="ABSON memory 4"
-      >
-
+      <img src="05.jpeg" alt="ABSON memory 4">
       <figcaption>
         Evidence #04 · family-safe-ish
       </figcaption>
-
     </figure>
 
-
     <figure class="gallery-photo p5">
-
-      <img
-        src="06.jpeg"
-        alt="ABSON memory 5"
-      >
-
+      <img src="06.jpeg" alt="ABSON memory 5">
       <figcaption>
         Evidence #05 · outfit department approved
       </figcaption>
-
     </figure>
 
-
     <figure class="gallery-photo p6">
-
-      <img
-        src="07.jpeg"
-        alt="ABSON memory 6"
-      >
-
+      <img src="07.jpeg" alt="ABSON memory 6">
       <figcaption>
         Evidence #06 · caught smiling
       </figcaption>
-
     </figure>
 
-
     <figure class="gallery-photo p7">
-
-      <img
-        src="08.jpeg"
-        alt="ABSON memory 7"
-      >
-
+      <img src="08.jpeg" alt="ABSON memory 7">
       <figcaption>
         Evidence #07 · plot thickens
       </figcaption>
-
     </figure>
 
-
     <figure class="gallery-photo p8">
-
-      <img
-        src="09.jpeg"
-        alt="ABSON memory 8"
-      >
-
+      <img src="09.jpeg" alt="ABSON memory 8">
       <figcaption>
         Evidence #08 · still going
       </figcaption>
-
     </figure>
-
 
   </div>
 
 </section>
 
 
-
-<!-- =========================================================
-     VENUE
-     ========================================================= -->
-
 <section class="venue section">
 
-
   <div class="venue-card">
-
 
     <p class="kicker">
       WHERE THE CHAOS HAPPENS
     </p>
 
-
     <h2>
-
       Park Street.<br>
-
       Come hungry.
-
     </h2>
 
-
     <p>
-
-      <b>
-        Wedding
-      </b>
-      · St Thomas Church<br>
-
-      <b>
-        Reception
-      </b>
-      · The Terrace
-
+      <b>Wedding</b> · St Thomas Church<br>
+      <b>Reception</b> · The Terrace
     </p>
 
-
     <div>
-
 
       <a
         class="cta dark"
@@ -1390,7 +660,6 @@
         CHURCH MAP
       </a>
 
-
       <a
         class="cta outline"
         href="https://maps.app.goo.gl/QuAM5BEArWRFtQ3U7"
@@ -1400,88 +669,48 @@
         RECEPTION MAP
       </a>
 
-
     </div>
 
-
   </div>
-
 
   <div class="venue-doodle">
-
     ★<br>
-
-    <span>
-      #ABSON
-    </span><br>
-
+    <span>#ABSON</span><br>
     OR BUST
-
   </div>
-
 
 </section>
 
 
+<section class="guest-upload section" id="guest-photos">
 
-<!-- =========================================================
-     GUEST PHOTO UPLOAD
-     ========================================================= -->
-
-<section
-  class="guest-upload section"
-  id="guest-photos"
->
-
-
-  <div
-    class="abson-watermark"
-    aria-hidden="true"
-  >
+  <div class="abson-watermark" aria-hidden="true">
     #ABSON
   </div>
 
-
   <div class="upload-card">
-
 
     <div class="upload-stamp">
       #ABSON CAMERA ROLL
     </div>
 
-
     <p class="eyebrow">
-
-      YOU WERE THERE.
-      YOU SAW IT.
-
+      YOU WERE THERE. YOU SAW IT.
       NOW SEND THE EVIDENCE.
-
     </p>
-
 
     <h2>
-
       Got a good photo?<br>
-
-      <em>
-        Don't keep it to yourself.
-      </em>
-
+      <em>Don't keep it to yourself.</em>
     </h2>
 
-
     <p class="upload-copy">
-
       Upload your favourite moments from the wedding straight to our
       #ABSON photo archive. Photos and videos welcome.
-
     </p>
-
 
 
     <form id="guestUploadForm">
-
 
       <input
         type="text"
@@ -1490,30 +719,24 @@
         placeholder="Your name (optional)"
       >
 
-
       <label
         class="file-drop"
         for="guestFiles"
       >
 
-
         <span class="upload-icon">
           ↑
         </span>
-
 
         <strong>
           CHOOSE PHOTOS / VIDEOS
         </strong>
 
-
         <small>
           Tap here to select one or multiple files
         </small>
 
-
       </label>
-
 
       <input
         id="guestFiles"
@@ -1524,12 +747,10 @@
         hidden
       >
 
-
       <div
         id="uploadPreview"
         class="upload-preview"
       ></div>
-
 
       <button
         class="upload-button"
@@ -1538,72 +759,47 @@
         SEND TO #ABSON →
       </button>
 
-
       <p
         id="uploadStatus"
         class="upload-status"
       ></p>
 
-
     </form>
 
-
   </div>
-
 
 </section>
 
 
+<section class="rsvp section" id="rsvp">
 
-<!-- =========================================================
-     RSVP
-     ========================================================= -->
-
-<section
-  class="rsvp section"
-  id="rsvp"
->
-
-
-  <div
-    class="abson-watermark"
-    aria-hidden="true"
-  >
+  <div class="abson-watermark" aria-hidden="true">
     #ABSON
   </div>
 
-
   <div class="rsvp-inner">
-
 
     <p class="kicker">
       VERY IMPORTANT FORM
     </p>
 
-
     <h2>
       Are you coming?
     </h2>
 
-
     <p>
-
       Because if you say yes, we're counting you for hugs,
       food and questionable dance moves.
-
     </p>
 
 
-
     <form id="rsvpForm">
-
 
       <input
         required
         name="name"
         placeholder="Your name (be honest)"
       >
-
 
       <input
         required
@@ -1614,53 +810,40 @@
         placeholder="How many humans?"
       >
 
-
-      <select
-        name="attendance"
-        required
-      >
-
+      <select name="attendance" required>
 
         <option value="">
           Choose your fate
         </option>
 
-
         <option>
           YES · obviously
         </option>
 
-
         <option>
           NO · crying already
         </option>
-
 
       </select>
 
 
       <select name="event">
 
-
         <option value="">
           Which chaos?
         </option>
-
 
         <option>
           Wedding
         </option>
 
-
         <option>
           Reception
         </option>
 
-
         <option>
           Both · full commitment
         </option>
-
 
       </select>
 
@@ -1679,73 +862,47 @@
         LOCK IN MY RSVP ✦
       </button>
 
-
     </form>
-
 
     <p
       class="form-note"
       id="formNote"
     ></p>
 
-
   </div>
 
-
 </section>
-
 
 </main>
 
 
-
-<!-- =========================================================
-     FOOTER
-     ========================================================= -->
-
 <footer>
-
 
   <div class="footer-badge">
     #ABSON
   </div>
 
-
   <h3>
-
     THE WEDDING OF<br>
-
-    <span>
-      Abhilasha &amp; Noel
-    </span>
-
+    <span>Abhilasha &amp; Noel</span>
   </h3>
-
 
   <p>
     09 · 01 · 2027
   </p>
 
-
   <p>
     Made with love for our forever.
   </p>
 
-
 </footer>
 
-
-
-<!-- =========================================================
-     LIGHTBOX
-     ========================================================= -->
 
 <div
   class="lightbox"
   id="lightbox"
   aria-hidden="true"
 >
-
 
   <button
     class="lightbox-close"
@@ -1755,41 +912,30 @@
     ×
   </button>
 
-
   <img
     id="lightboxImage"
     src=""
     alt="Expanded ABSON photo"
   >
 
-
   <div
     class="lightbox-caption"
     id="lightboxCaption"
   ></div>
 
-
 </div>
 
-
-
-<!-- =========================================================
-     MUSIC
-     ========================================================= -->
 
 <audio
   id="weddingMusic"
   loop
   preload="none"
 >
-
   <source
     src="wedding-song.mp3"
     type="audio/mpeg"
   >
-
 </audio>
-
 
 
 <script src="script.js"></script>
