@@ -1352,3 +1352,50 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
     font-size: 5.5px !important;
   }
 }
+
+/* =========================================================
+   FINAL MOBILE LORE ORDER
+   Mobile should read:
+   THE LORE → STORY → TIMELINE → PHOTO
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .lore-section .lore-layout {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* Story + heading first */
+  .lore-section .lore-copy {
+    order: 1 !important;
+    width: 100% !important;
+  }
+
+  /* Photo comes AFTER the interactive timeline */
+  .lore-section .lore-visual {
+    order: 2 !important;
+    width: 100% !important;
+  }
+
+  .lore-section .lore-story-panel {
+    margin-bottom: 0 !important;
+  }
+
+  .lore-section .lore-controls {
+    margin-top: 18px !important;
+    margin-bottom: 34px !important;
+  }
+
+  .lore-section .lore-photo-card {
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .lore-section .lore-photo-card img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: cover !important;
+  }
+}
