@@ -568,23 +568,31 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   }
 
 }
-  /* ================================
-   MOBILE HERO FIX
-   ================================ */
+/* =========================================================
+   FINAL MOBILE HERO FIX
+   Fixes: hero content, countdown, date, CTA and overlay
+   ========================================================= */
 
 @media (max-width: 800px) {
 
   .hero {
-    min-height: 100svh !important;
-    height: auto !important;
-    display: block !important;
     position: relative !important;
+    width: 100% !important;
+    height: 100svh !important;
+    min-height: 100svh !important;
     overflow: hidden !important;
+    display: block !important;
+    isolation: isolate !important;
+    background: #222 !important;
   }
 
   .hero-photo {
     position: absolute !important;
     inset: 0 !important;
+    z-index: 1 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
@@ -594,43 +602,50 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   .hero-tint {
     position: absolute !important;
     inset: 0 !important;
-    z-index: 1 !important;
+    z-index: 2 !important;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
     background:
       linear-gradient(
         90deg,
-        rgba(0,0,0,.62),
-        rgba(0,0,0,.20)
+        rgba(0,0,0,.76) 0%,
+        rgba(0,0,0,.52) 42%,
+        rgba(0,0,0,.18) 100%
       ) !important;
   }
 
+  /*
+     IMPORTANT:
+     The old mobile CSS used .hero-content as a normal-flow element.
+     This version puts the whole content layer directly over the photo.
+  */
   .hero-content {
-    position: relative !important;
-    z-index: 5 !important;
-    display: flex !important;
-    visibility: visible !important;
-    opacity: 1 !important;
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 10 !important;
 
     width: 100% !important;
     max-width: none !important;
-    min-height: 100svh !important;
+    min-height: 100% !important;
+    height: 100% !important;
 
     margin: 0 !important;
-    padding: 92px 24px 72px !important;
+    padding: 105px 24px 70px !important;
 
-    color: #fff !important;
-
-    background:
-      linear-gradient(
-        90deg,
-        rgba(0,0,0,.58),
-        rgba(0,0,0,.10)
-      ) !important;
-
+    display: flex !important;
+    flex-direction: column !important;
     justify-content: center !important;
     align-items: flex-start !important;
-    text-align: left !important;
+
+    background: transparent !important;
+    color: #fff !important;
+
+    visibility: visible !important;
+    opacity: 1 !important;
   }
 
+  /* Every important hero element must sit above the photo and tint. */
   .hero-content .kicker,
   .hero-content h1,
   .hero-content .name-strip,
@@ -638,79 +653,200 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   .hero-content .countdown-wrap,
   .hero-content .cta {
     position: relative !important;
-    z-index: 6 !important;
+    z-index: 20 !important;
     visibility: visible !important;
     opacity: 1 !important;
   }
 
+  .hero-content .kicker {
+    display: block !important;
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 1.4 !important;
+    letter-spacing: .18em !important;
+  }
+
+  /*
+     Reset the previous absolute-position rules.
+     This is the main reason the mobile layout was breaking.
+  */
   .hero h1 {
-    font-size: clamp(4.1rem, 15vw, 5.8rem) !important;
-    line-height: .82 !important;
+    position: relative !important;
+    inset: auto !important;
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+
+    display: block !important;
+    width: auto !important;
+    max-width: 100% !important;
+
     margin: 14px 0 18px !important;
+
+    font-size: clamp(4rem, 15vw, 5.8rem) !important;
+    line-height: .82 !important;
+    text-align: left !important;
+
+    color: #fff !important;
+    text-shadow: 4px 4px 0 rgba(0,0,0,.25) !important;
   }
 
-  .name-strip {
-    font-size: 1.45rem !important;
+  .hero h1 span {
+    color: var(--yellow) !important;
   }
 
-  .hero-date {
-    font-size: 9px !important;
-    margin-top: 12px !important;
-  }
-
-  .countdown-wrap {
-    width: min(100%, 370px) !important;
-    margin: 24px 0 22px !important;
-    padding: 12px 10px !important;
-  }
-
-  .countdown-wrap > span {
-    font-size: 7px !important;
-    line-height: 1.35 !important;
-  }
-
-  .countdown {
-    width: 100% !important;
+  .hero-content .name-strip {
     display: flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+
+    color: #fff !important;
+    font-size: 1.35rem !important;
+    line-height: 1.2 !important;
+  }
+
+  .hero-content .name-strip b,
+  .hero-content .name-strip i {
+    color: #fff !important;
+  }
+
+  .hero-content .hero-date {
+    display: block !important;
+    margin-top: 12px !important;
+
+    color: #fff !important;
+    font-size: 10px !important;
+    line-height: 1.5 !important;
+    letter-spacing: .12em !important;
+  }
+
+  /* Countdown is deliberately large and impossible to hide on phones. */
+  .hero-content .countdown-wrap {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    width: min(100%, 370px) !important;
+    max-width: 370px !important;
+
+    margin: 24px 0 22px !important;
+    padding: 14px 10px !important;
+
+    background: var(--paper) !important;
+    color: var(--ink) !important;
+
+    border: 2px solid var(--ink) !important;
+    box-shadow: 6px 6px 0 var(--pink) !important;
+
+    transform: rotate(-1deg) !important;
+  }
+
+  .hero-content .countdown-wrap > span {
+    display: block !important;
+    color: var(--ink) !important;
+    font-size: 8px !important;
+    line-height: 1.35 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .hero-content .countdown {
+    display: flex !important;
+    width: 100% !important;
     justify-content: space-between !important;
+    align-items: center !important;
     gap: 3px !important;
   }
 
-  .countdown div {
+  .hero-content .countdown div {
+    display: block !important;
     min-width: 0 !important;
     flex: 1 1 0 !important;
+    text-align: center !important;
   }
 
-  .countdown strong {
-    font-size: 2.1rem !important;
+  .hero-content .countdown strong {
+    display: block !important;
+    color: var(--ink) !important;
+    font-size: 2.15rem !important;
+    line-height: 1 !important;
   }
 
-  .countdown small {
-    font-size: 6px !important;
+  .hero-content .countdown small {
+    display: block !important;
+    color: var(--ink) !important;
+    font-size: 7px !important;
+    line-height: 1.3 !important;
+    letter-spacing: .1em !important;
   }
 
   .hero-content .cta {
-    padding: 13px 16px !important;
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+
+    padding: 14px 17px !important;
+    margin-top: 2px !important;
+
     font-size: 9px !important;
+    line-height: 1.2 !important;
+  }
+
+  .hero-content .cta.outline {
+    margin-left: 8px !important;
+  }
+
+  .hero-stickers {
+    position: absolute !important;
+    inset: 0 !important;
+    z-index: 30 !important;
+    pointer-events: none !important;
   }
 
   .scroll-note {
-    z-index: 7 !important;
+    position: absolute !important;
+    z-index: 40 !important;
     bottom: 14px !important;
+    left: 50% !important;
+    color: #fff !important;
     font-size: 7px !important;
     white-space: nowrap !important;
   }
 
-  .hero-stickers {
-    z-index: 8 !important;
-  }
-
-  /* Keep confetti above everything */
+  /* Confetti stays above the mobile hero. */
   .confetti,
   .abson-confetti {
     position: fixed !important;
-    z-index: 10000 !important;
+    z-index: 100000 !important;
     pointer-events: none !important;
   }
 }
+
+/* Small phones */
+@media (max-width: 420px) {
+
+  .hero-content {
+    padding: 92px 18px 62px !important;
+  }
+
+  .hero h1 {
+    font-size: clamp(3.6rem, 16vw, 5rem) !important;
+  }
+
+  .hero-content .name-strip {
+    font-size: 1.2rem !important;
+  }
+
+  .hero-content .countdown-wrap {
+    max-width: 100% !important;
+    padding: 12px 8px !important;
+  }
+
+  .hero-content .countdown strong {
+    font-size: 1.9rem !important;
+  }
+
+  .hero-content .countdown small {
+    font-size: 6px !important;
+  }
 }
