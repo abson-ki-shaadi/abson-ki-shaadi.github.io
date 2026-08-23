@@ -198,16 +198,16 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
 }
 
 /* Date visibility: make the wedding date clearly visible and bold. */
-.hero-date{color:#111 !important;font-weight:900 !important;text-shadow:none !important;position:relative;z-index:6;}
+.hero-date{color:#fff !important;font-weight:900 !important;text-shadow:2px 2px 0 rgba(0,0,0,.25) !important;position:relative;z-index:6;}
 
 /* Requested hero typography update: black + bold */
 .hero .kicker,
 .hero .name-strip,
 .hero .name-strip b,
 .hero .name-strip i {
-  color: #111 !important;
+  color: #fff !important;
   font-weight: 900 !important;
-  text-shadow: none !important;
+  text-shadow:2px 2px 0 rgba(0,0,0,.25) !important;
 }
 .hero .name-strip i {
   font-family: "DM Sans", Arial, sans-serif;
@@ -1016,5 +1016,339 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
 
   .lore-step small {
     font-size: 5.5px;
+  }
+}
+
+
+/* =========================================================
+   FINAL DESKTOP LORE FIX
+   IMPORTANT: this matches the CURRENT index.html structure:
+   .section-heading
+   .lore-container
+   .lore-photo-wrap
+   .lore-story
+   .lore-timeline
+   .lore-next
+   ========================================================= */
+
+/* The Lore section must NOT put the heading and container
+   into separate grid columns. */
+.lore-section {
+  display: block !important;
+  position: relative !important;
+  background: var(--blue) !important;
+  color: #fff !important;
+  overflow: hidden !important;
+  padding: 110px 7vw !important;
+}
+
+/* Heading spans the complete section width */
+.lore-section > .section-heading {
+  position: relative !important;
+  z-index: 3 !important;
+  width: min(850px, 100%) !important;
+  max-width: 850px !important;
+  margin: 0 auto 55px !important;
+  text-align: center !important;
+}
+
+/* Photo + story/timeline live together */
+.lore-container {
+  position: relative !important;
+  z-index: 3 !important;
+  width: min(1200px, 100%) !important;
+  margin: 0 auto !important;
+
+  display: grid !important;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr) !important;
+  grid-template-rows: auto auto auto !important;
+  column-gap: clamp(35px, 5vw, 80px) !important;
+  row-gap: 22px !important;
+  align-items: center !important;
+}
+
+/* PHOTO — left side */
+.lore-photo-wrap {
+  position: relative !important;
+  grid-column: 1 !important;
+  grid-row: 1 / span 3 !important;
+
+  width: 100% !important;
+  max-width: 650px !important;
+  justify-self: center !important;
+
+  background: #fff !important;
+  padding: 12px 12px 45px !important;
+  border: 3px solid var(--ink) !important;
+  box-shadow: 11px 11px 0 var(--ink) !important;
+  transform: rotate(-2deg) !important;
+}
+
+/* Actual image used by the current HTML */
+.lore-photo-wrap .lore-photo {
+  display: block !important;
+  width: 100% !important;
+  height: min(560px, 42vw) !important;
+  min-height: 430px !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  cursor: zoom-in !important;
+}
+
+/* Exhibit label */
+.lore-photo-wrap .lore-photo-label {
+  position: absolute !important;
+  left: 16px !important;
+  bottom: 13px !important;
+  color: var(--ink) !important;
+  font: 16px "Bebas Neue", sans-serif !important;
+  letter-spacing: .08em !important;
+}
+
+/* Pink #ABSON stamp */
+.lore-photo-wrap .lore-photo-stamp {
+  position: absolute !important;
+  right: -16px !important;
+  bottom: 25px !important;
+  padding: 9px 13px !important;
+  background: var(--pink) !important;
+  color: var(--ink) !important;
+  border: 2px solid var(--ink) !important;
+  font: 900 15px Arial, sans-serif !important;
+  font-style: italic !important;
+  box-shadow: 4px 4px 0 var(--ink) !important;
+  transform: rotate(7deg) !important;
+}
+
+/* STORY — right side */
+.lore-story {
+  grid-column: 2 !important;
+  grid-row: 1 !important;
+
+  width: 100% !important;
+  background: var(--yellow) !important;
+  color: var(--ink) !important;
+  border: 2px solid var(--ink) !important;
+  padding: 28px 28px 30px !important;
+  box-shadow: 7px 7px 0 var(--ink) !important;
+  transform: rotate(1deg) !important;
+}
+
+/* Counter */
+.lore-story .lore-counter {
+  display: flex !important;
+  gap: 7px !important;
+  margin: 0 0 5px !important;
+  font: 18px "Bebas Neue", sans-serif !important;
+  letter-spacing: .08em !important;
+}
+
+.lore-story .lore-counter span:first-child {
+  color: var(--red) !important;
+}
+
+/* Story title */
+.lore-story h3,
+#loreTitle {
+  margin: 7px 0 12px !important;
+  font: 4rem/.85 "Bebas Neue", sans-serif !important;
+}
+
+/* Story text */
+.lore-story > p,
+#loreText {
+  margin: 0 !important;
+  line-height: 1.6 !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+/* Caption */
+.lore-story .lore-caption {
+  display: inline-block !important;
+  margin-top: 14px !important;
+  font-size: 9px !important;
+  font-weight: 900 !important;
+  letter-spacing: .08em !important;
+  text-transform: uppercase !important;
+}
+
+/* Timeline — right side underneath story */
+.lore-timeline {
+  grid-column: 2 !important;
+  grid-row: 2 !important;
+
+  display: grid !important;
+  grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+  gap: 5px !important;
+  width: 100% !important;
+}
+
+/* Current HTML uses .lore-step with <span> + <strong> */
+.lore-timeline .lore-step {
+  min-width: 0 !important;
+  min-height: 64px !important;
+  padding: 8px 5px !important;
+
+  border: 2px solid rgba(255,255,255,.45) !important;
+  background: rgba(255,255,255,.10) !important;
+  color: #fff !important;
+
+  cursor: pointer !important;
+  font-family: inherit !important;
+  text-align: center !important;
+  transition: .2s ease !important;
+}
+
+.lore-timeline .lore-step span {
+  display: block !important;
+  font: 17px "Bebas Neue", sans-serif !important;
+}
+
+.lore-timeline .lore-step strong {
+  display: block !important;
+  margin-top: 3px !important;
+  font-size: 7px !important;
+  line-height: 1.15 !important;
+  letter-spacing: .04em !important;
+}
+
+.lore-timeline .lore-step:hover {
+  transform: translateY(-3px) !important;
+}
+
+.lore-timeline .lore-step.active {
+  background: var(--yellow) !important;
+  color: var(--ink) !important;
+  border-color: var(--ink) !important;
+  box-shadow: 3px 3px 0 var(--ink) !important;
+  transform: translateY(-4px) !important;
+}
+
+/* Next button */
+.lore-next {
+  grid-column: 2 !important;
+  grid-row: 3 !important;
+
+  justify-self: start !important;
+  width: auto !important;
+
+  border: 2px solid var(--ink) !important;
+  background: var(--yellow) !important;
+  color: var(--ink) !important;
+  padding: 12px 17px !important;
+  font: 900 10px "DM Sans", sans-serif !important;
+  letter-spacing: .12em !important;
+  cursor: pointer !important;
+  box-shadow: 4px 4px 0 var(--ink) !important;
+  transition: .2s ease !important;
+}
+
+.lore-next:hover {
+  transform: translate(3px, 3px) !important;
+  box-shadow: 1px 1px 0 var(--ink) !important;
+}
+
+/* =========================================================
+   MOBILE LORE
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .lore-section {
+    display: block !important;
+    padding: 75px 5vw !important;
+  }
+
+  .lore-section > .section-heading {
+    width: 100% !important;
+    margin: 0 auto 38px !important;
+  }
+
+  .lore-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 30px !important;
+    width: 100% !important;
+  }
+
+  .lore-photo-wrap {
+    width: calc(100% - 8px) !important;
+    max-width: 650px !important;
+    margin: 0 auto !important;
+    padding: 8px 8px 38px !important;
+    transform: rotate(-1.5deg) !important;
+  }
+
+  .lore-photo-wrap .lore-photo {
+    width: 100% !important;
+    height: 390px !important;
+    min-height: 0 !important;
+  }
+
+  .lore-photo-wrap .lore-photo-label {
+    left: 10px !important;
+    bottom: 9px !important;
+    font-size: 13px !important;
+  }
+
+  .lore-photo-wrap .lore-photo-stamp {
+    right: -8px !important;
+    bottom: 20px !important;
+    font-size: 12px !important;
+  }
+
+  .lore-story {
+    width: 100% !important;
+    transform: rotate(.7deg) !important;
+    padding: 22px 20px 24px !important;
+  }
+
+  .lore-story h3,
+  #loreTitle {
+    font-size: 3rem !important;
+  }
+
+  .lore-story > p,
+  #loreText {
+    font-size: 13px !important;
+  }
+
+  .lore-timeline {
+    width: 100% !important;
+    grid-template-columns: repeat(5, minmax(0, 1fr)) !important;
+    gap: 4px !important;
+  }
+
+  .lore-timeline .lore-step {
+    min-height: 62px !important;
+    padding: 7px 3px !important;
+  }
+
+  .lore-timeline .lore-step span {
+    font-size: 16px !important;
+  }
+
+  .lore-timeline .lore-step strong {
+    font-size: 6px !important;
+  }
+
+  .lore-next {
+    align-self: flex-start !important;
+  }
+}
+
+@media (max-width: 420px) {
+
+  .lore-photo-wrap .lore-photo {
+    height: 340px !important;
+  }
+
+  .lore-timeline .lore-step {
+    min-height: 57px !important;
+  }
+
+  .lore-timeline .lore-step strong {
+    font-size: 5.5px !important;
   }
 }
