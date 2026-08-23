@@ -1,186 +1,67 @@
-const WEDDING_DATE=new Date("2027-01-09T15:00:00+05:30").getTime();
-const music=document.getElementById("weddingMusic"),musicBtn=document.getElementById("musicBtn"),opening=document.getElementById("opening");
-let musicReady=true; music.addEventListener("error",()=>musicReady=false);
-function confettiBurst(){const colors=["#ffd447","#ff6f91","#5b7cfa","#b7df66","#ff5b4d"];for(let i=0;i<70;i++){const p=document.createElement("i");p.className="confetti";p.style.left="50%";p.style.top="45%";p.style.background=colors[i%colors.length];p.style.setProperty("--x",`${(Math.random()-.5)*110}vw`);p.style.setProperty("--y",`${(Math.random()-.5)*100}vh`);p.style.transform=`rotate(${Math.random()*360}deg)`;document.body.appendChild(p);setTimeout(()=>p.remove(),1600)}}
-async function playMusic(){if(!musicReady)return;try{await music.play();musicBtn.textContent="❚❚ MUSIC";musicBtn.classList.add("playing")}catch(e){}}
-document.getElementById("enterBtn").addEventListener("click",async()=>{opening.classList.add("hidden");confettiBurst();await playMusic()});
-musicBtn.addEventListener("click",async()=>{if(!musicReady){alert("Wedding music could not be loaded.");return}if(music.paused){await playMusic()}else{music.pause();musicBtn.textContent="♪ MUSIC";musicBtn.classList.remove("playing")}});
-function countdown(){let d=WEDDING_DATE-Date.now();if(d<0)d=0;document.getElementById("days").textContent=String(Math.floor(d/86400000)).padStart(2,"0");document.getElementById("hours").textContent=String(Math.floor(d/3600000)%24).padStart(2,"0");document.getElementById("minutes").textContent=String(Math.floor(d/60000)%60).padStart(2,"0");document.getElementById("seconds").textContent=String(Math.floor(d/1000)%60).padStart(2,"0")};countdown();setInterval(countdown,1000);
-const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("seen")}),{threshold:.12});document.querySelectorAll(".section,.event-card,.gallery-photo").forEach((el,i)=>{el.style.setProperty("--delay",`${(i%8)*70}ms`);el.style.transitionDelay="var(--delay)";el.style.transformOrigin="center";observer.observe(el)});const style=document.createElement("style");style.textContent='.section.seen,.event-card.seen,.gallery-photo.seen{opacity:1;transform:translateY(0) rotate(var(--r,0deg));transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}';document.head.appendChild(style);
+/* =========================================================
+   #ABSON WEDDING WEBSITE — BROWSER JAVASCRIPT
+   ========================================================= */
 
-// Click any gallery/story photo to open it individually.
-const lightbox=document.getElementById("lightbox");
-const lightboxImage=document.getElementById("lightboxImage");
-const lightboxCaption=document.getElementById("lightboxCaption");
-const lightboxClose=document.getElementById("lightboxClose");
-function closeLightbox(){lightbox.classList.remove("open");lightbox.setAttribute("aria-hidden","true");document.body.style.overflow="";lightboxImage.src=""}
-document.querySelectorAll(".gallery-photo img,.story-image img").forEach(img=>{img.addEventListener("click",()=>{lightboxImage.src=img.currentSrc||img.src;lightboxImage.alt=img.alt||"ABSON photo";const cap=img.closest("figure")?.querySelector("figcaption")?.textContent||img.closest(".story-image")?.querySelector(".photo-label")?.textContent||"#ABSON";lightboxCaption.textContent=cap;lightbox.classList.add("open");lightbox.setAttribute("aria-hidden","false");document.body.style.overflow="hidden"})});
-lightboxClose.addEventListener("click",closeLightbox);
-lightbox.addEventListener("click",e=>{if(e.target===lightbox)closeLightbox()});
-document.addEventListener("keydown",e=>{if(e.key==="Escape"&&lightbox.classList.contains("open"))closeLightbox()});
+document.addEventListener("DOMContentLoaded", function () {
 
-const RSVP_ENDPOINT = 'https://script.google.com/macros/s/AKfycbytf8iqJyMMe3MrWC4rUJbthF-M26ZY_2XTpLh-BrP5b1cfWPetPSAR8zieIOr8qAcQOg/exec';
+  /* ---------------------------------------------------------
+     CONFIG
+     --------------------------------------------------------- */
 
-document.getElementById("rsvpForm").addEventListener("submit", async e => {
-  e.preventDefault();
-  const form = e.target;
-  const note = document.getElementById("formNote");
-  const button = form.querySelector("button[type=submit]");
-  const data = Object.fromEntries(new FormData(form).entries());
-  if (RSVP_ENDPOINT.includes("PASTE_YOUR")) {
-    note.textContent = "RSVP form is ready — connect the Google Sheet endpoint first. ❤️";
-    return;
-  }
-  button.disabled = true;
-  button.textContent = "SENDING…";
-  note.textContent = "Saving your RSVP…";
-  try {
-    await fetch(RSVP_ENDPOINT, {
-      method: "POST",
-      mode: "no-cors",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify(data)
-    });
-    note.textContent = `You're on the list, ${data.name}! 🎉 #ABSON will see you there.`;
-    confettiBurst();
-    form.reset();
-  } catch (err) {
-    note.textContent = "Oops — the RSVP could not be saved. Please try again.";
-  } finally {
-    button.disabled = false;
-    button.textContent = "LOCK IN MY RSVP ✦";
-  }
-});
+  const API_URL =
+    "https://script.google.com/macros/s/AKfycbytf8iqJyMMe3MrWC4rUJbthF-M26ZY_2XTpLh-BrP5b1cfWPetPSAR8zieIOr8qAcQOg/exec";
 
 
-/* #ABSON Guest Photo Upload
-   After deploying the Google Apps Script below, paste its /exec URL here. */
-const GUEST_UPLOAD_ENDPOINT = "https://script.google.com/macros/s/AKfycbytf8iqJyMMe3MrWC4rUJbthF-M26ZY_2XTpLh-BrP5b1cfWPetPSAR8zieIOr8qAcQOg/exec";
-
-const guestUploadForm = document.getElementById("guestUploadForm");
-const guestFiles = document.getElementById("guestFiles");
-const uploadPreview = document.getElementById("uploadPreview");
-const uploadStatus = document.getElementById("uploadStatus");
-
-if (guestFiles) {
-  guestFiles.addEventListener("change", () => {
-    uploadPreview.innerHTML = "";
-    [...guestFiles.files].forEach(file => {
-      const pill = document.createElement("div");
-      pill.className = "file-pill";
-      pill.textContent = `${file.name} · ${(file.size/1024/1024).toFixed(1)} MB`;
-      uploadPreview.appendChild(pill);
-    });
-  });
-}
-
-if (guestUploadForm) {
-  guestUploadForm.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    if (!guestFiles.files.length) {
-      uploadStatus.textContent = "Please choose at least one photo or video.";
-      return;
-    }
-    if (GUEST_UPLOAD_ENDPOINT.includes("PASTE_YOUR")) {
-      uploadStatus.textContent = "The upload connection still needs to be deployed in Google Apps Script.";
-      return;
-    }
-
-    const button = guestUploadForm.querySelector(".upload-button");
-    button.disabled = true;
-    uploadStatus.textContent = "Uploading your #ABSON memories…";
-
-    try {
-      const guestName = document.getElementById("guestName").value.trim();
-      for (const file of guestFiles.files) {
-        const reader = new FileReader();
-        const base64 = await new Promise((resolve, reject) => {
-          reader.onload = () => resolve(String(reader.result).split(",")[1]);
-          reader.onerror = reject;
-          reader.readAsDataURL(file);
-        });
-
-        const payload = {
-          action: "uploadGuestFile",
-          guestName,
-          fileName: file.name,
-          mimeType: file.type || "application/octet-stream",
-          base64
-        };
-
-        await fetch(GUEST_UPLOAD_ENDPOINT, {
-          method: "POST",
-          mode: "no-cors",
-          headers: {"Content-Type":"text/plain;charset=utf-8"},
-          body: JSON.stringify(payload)
-        });
-      }
-
-      uploadStatus.textContent = "Done! Your memories are now part of the #ABSON archive. ❤️";
-      guestUploadForm.reset();
-      uploadPreview.innerHTML = "";
-    } catch (err) {
-      uploadStatus.textContent = "Upload failed. Please try again or share the photos with the couple directly.";
-    } finally {
-      button.disabled = false;
-    }
-  });
-  /* =========================================
-   #ABSON INTERACTIVE OPENING
-   ========================================= */
-
-document.addEventListener("DOMContentLoaded", () => {
+  /* ---------------------------------------------------------
+     OPENING SCREEN
+     --------------------------------------------------------- */
 
   const opening = document.getElementById("opening");
   const enterBtn = document.getElementById("enterBtn");
 
-  if (!opening || !enterBtn) return;
+  if (opening && enterBtn) {
 
-  enterBtn.addEventListener("click", () => {
+    enterBtn.addEventListener("click", function () {
 
-    // Prevent double-clicks
-    if (opening.classList.contains("opening-leaving")) return;
+      if (opening.classList.contains("opening-leaving")) return;
 
-    opening.classList.add("opening-leaving");
+      opening.classList.add("opening-leaving");
 
-    enterBtn.disabled = true;
-    enterBtn.innerHTML = "BREAKING NEWS...";
+      enterBtn.disabled = true;
+      enterBtn.textContent = "BREAKING NEWS...";
 
-    // Create #ABSON flash
-    const flash = document.createElement("div");
+      const flash = document.createElement("div");
 
-    flash.className = "abson-flash";
-    flash.innerHTML = `
-      <span>#ABSON</span>
-    `;
+      flash.className = "abson-flash";
 
-    document.body.appendChild(flash);
+      flash.innerHTML = "<span>#ABSON</span>";
 
-    // Confetti
-    createAbsonConfetti();
+      document.body.appendChild(flash);
 
-    // Remove opening after animation
-    setTimeout(() => {
-      opening.style.display = "none";
-      flash.remove();
+      createAbsonConfetti();
 
-      window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-      });
+      setTimeout(function () {
 
-    }, 1500);
+        opening.classList.add("hidden");
 
-  });
+        setTimeout(function () {
+          opening.style.display = "none";
+          flash.remove();
+        }, 400);
+
+      }, 1150);
+
+    });
+
+  }
 
 
   function createAbsonConfetti() {
 
-    const pieces = 45;
+    for (let i = 0; i < 45; i++) {
 
-    for (let i = 0; i < pieces; i++) {
-
-      const piece = document.createElement("span");
+      const piece =
+        document.createElement("span");
 
       piece.className = "abson-confetti";
 
@@ -188,23 +69,138 @@ document.addEventListener("DOMContentLoaded", () => {
         Math.random() * 100 + "vw";
 
       piece.style.animationDelay =
-        Math.random() * 0.4 + "s";
+        Math.random() * .4 + "s";
 
       piece.style.transform =
-        `rotate(${Math.random() * 360}deg)`;
+        "rotate(" +
+        Math.random() * 360 +
+        "deg)";
 
       document.body.appendChild(piece);
 
-      setTimeout(() => {
+      setTimeout(function () {
         piece.remove();
       }, 2200);
 
     }
-    /* =========================================================
-   #ABSON — INTERACTIVE LORE
-   ========================================================= */
 
-document.addEventListener("DOMContentLoaded", function () {
+  }
+
+
+  /* ---------------------------------------------------------
+     COUNTDOWN
+     --------------------------------------------------------- */
+
+  const weddingDate =
+    new Date("2027-01-09T15:00:00+05:30").getTime();
+
+  function updateCountdown() {
+
+    const now = Date.now();
+
+    let distance =
+      weddingDate - now;
+
+    if (distance < 0) {
+      distance = 0;
+    }
+
+    const days =
+      Math.floor(distance / 86400000);
+
+    const hours =
+      Math.floor(
+        (distance % 86400000) / 3600000
+      );
+
+    const minutes =
+      Math.floor(
+        (distance % 3600000) / 60000
+      );
+
+    const seconds =
+      Math.floor(
+        (distance % 60000) / 1000
+      );
+
+
+    setText("days", days);
+    setText("hours", hours);
+    setText("minutes", minutes);
+    setText("seconds", seconds);
+
+  }
+
+
+  function setText(id, value) {
+
+    const element =
+      document.getElementById(id);
+
+    if (!element) return;
+
+    element.textContent =
+      String(value).padStart(2, "0");
+
+  }
+
+
+  updateCountdown();
+
+  setInterval(updateCountdown, 1000);
+
+
+  /* ---------------------------------------------------------
+     MUSIC
+     --------------------------------------------------------- */
+
+  const music =
+    document.getElementById("weddingMusic");
+
+  const musicBtn =
+    document.getElementById("musicBtn");
+
+  if (music && musicBtn) {
+
+    musicBtn.addEventListener("click", function () {
+
+      if (music.paused) {
+
+        music.play()
+          .then(function () {
+
+            musicBtn.textContent =
+              "♫ MUSIC ON";
+
+            musicBtn.classList.add("playing");
+
+          })
+          .catch(function () {
+
+            musicBtn.textContent =
+              "TAP AGAIN ♪";
+
+          });
+
+      } else {
+
+        music.pause();
+
+        musicBtn.textContent =
+          "♪ MUSIC";
+
+        musicBtn.classList.remove("playing");
+
+      }
+
+    });
+
+  }
+
+
+  /* ---------------------------------------------------------
+     INTERACTIVE LORE
+     --------------------------------------------------------- */
 
   const loreData = [
 
@@ -256,133 +252,413 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
 
 
-  const image = document.getElementById("loreImage");
-  const title = document.getElementById("loreTitle");
-  const text = document.getElementById("loreText");
-  const caption = document.getElementById("loreCaption");
+  const loreImage =
+    document.getElementById("loreImage");
 
-  const number = document.getElementById("loreNumber");
-  const current = document.getElementById("loreCurrent");
+  const loreTitle =
+    document.getElementById("loreTitle");
 
-  const steps = document.querySelectorAll(".lore-step");
-  const next = document.getElementById("loreNext");
+  const loreText =
+    document.getElementById("loreText");
 
+  const loreCaption =
+    document.getElementById("loreCaption");
 
-  if (
-    !image ||
-    !title ||
-    !text ||
-    !caption ||
-    !steps.length
-  ) {
-    return;
-  }
+  const loreCurrent =
+    document.getElementById("loreCurrent");
 
+  const loreNumber =
+    document.getElementById("loreNumber");
 
-  let currentStep = 0;
+  const loreSteps =
+    document.querySelectorAll(".lore-step");
 
+  const lorePrev =
+    document.getElementById("lorePrev");
 
-  function showLore(step) {
-
-    const item = loreData[step];
-
-    if (!item) return;
-
-    currentStep = step;
+  const loreNext =
+    document.getElementById("loreNext");
 
 
-    /* Animate image out */
+  let loreIndex = 0;
 
-    image.classList.add("changing");
+
+  function showLore(index) {
+
+    if (!loreImage) return;
+
+    if (index < 0) {
+      index = loreData.length - 1;
+    }
+
+    if (index >= loreData.length) {
+      index = 0;
+    }
+
+    loreIndex = index;
+
+    const item =
+      loreData[index];
+
+    loreImage.classList.add("lore-changing");
 
 
     setTimeout(function () {
 
-      image.src = item.image;
-      image.alt = item.title;
+      loreImage.src = item.image;
 
-      title.textContent = item.title;
-      text.textContent = item.text;
-      caption.textContent = item.caption;
+      loreImage.alt =
+        item.title + " — #ABSON";
 
-      const displayNumber =
-        String(step + 1).padStart(2, "0");
+      if (loreTitle) {
+        loreTitle.textContent =
+          item.title;
+      }
 
-      number.textContent = displayNumber;
-      current.textContent = displayNumber;
+      if (loreText) {
+        loreText.textContent =
+          item.text;
+      }
+
+      if (loreCaption) {
+        loreCaption.textContent =
+          item.caption;
+      }
+
+      const number =
+        String(index + 1).padStart(2, "0");
+
+      if (loreCurrent) {
+        loreCurrent.textContent =
+          number;
+      }
+
+      if (loreNumber) {
+        loreNumber.textContent =
+          number;
+      }
+
+      loreImage.classList.remove(
+        "lore-changing"
+      );
+
+    }, 170);
 
 
-      image.classList.remove("changing");
+    loreSteps.forEach(
+      function (step, stepIndex) {
 
-    }, 180);
+        step.classList.toggle(
+          "active",
+          stepIndex === index
+        );
+
+      }
+    );
+
+  }
 
 
-    /* Active button */
+  loreSteps.forEach(
+    function (step) {
 
-    steps.forEach(function (button, index) {
+      step.addEventListener(
+        "click",
+        function () {
 
-      button.classList.toggle(
-        "active",
-        index === step
+          showLore(
+            Number(step.dataset.step)
+          );
+
+        }
+      );
+
+    }
+  );
+
+
+  if (lorePrev) {
+
+    lorePrev.addEventListener(
+      "click",
+      function () {
+        showLore(loreIndex - 1);
+      }
+    );
+
+  }
+
+
+  if (loreNext) {
+
+    loreNext.addEventListener(
+      "click",
+      function () {
+        showLore(loreIndex + 1);
+      }
+    );
+
+  }
+
+
+  showLore(0);
+
+
+  /* ---------------------------------------------------------
+     GALLERY + STORY LIGHTBOX
+     --------------------------------------------------------- */
+
+  const lightbox =
+    document.getElementById("lightbox");
+
+  const lightboxImage =
+    document.getElementById("lightboxImage");
+
+  const lightboxCaption =
+    document.getElementById("lightboxCaption");
+
+  const lightboxClose =
+    document.getElementById("lightboxClose");
+
+
+  document
+    .querySelectorAll(
+      ".gallery-photo img, .story-image img, .lore-photo-card img"
+    )
+    .forEach(function (img) {
+
+      img.addEventListener(
+        "click",
+        function () {
+
+          if (!lightbox || !lightboxImage) {
+            return;
+          }
+
+          lightboxImage.src =
+            img.currentSrc ||
+            img.src;
+
+          lightboxImage.alt =
+            img.alt || "";
+
+          if (lightboxCaption) {
+
+            const figure =
+              img.closest("figure");
+
+            const caption =
+              figure
+                ? figure.querySelector("figcaption")
+                : null;
+
+            lightboxCaption.textContent =
+              caption
+                ? caption.textContent
+                : "";
+
+          }
+
+          lightbox.classList.add("open");
+          lightbox.setAttribute(
+            "aria-hidden",
+            "false"
+          );
+
+        }
       );
 
     });
 
 
-    /* Update next button */
+  function closeLightbox() {
 
-    if (step === loreData.length - 1) {
+    if (!lightbox) return;
 
-      next.textContent =
-        "START AGAIN ↻";
+    lightbox.classList.remove("open");
 
-    } else {
-
-      next.textContent =
-        "NEXT CHAPTER →";
-
-    }
+    lightbox.setAttribute(
+      "aria-hidden",
+      "true"
+    );
 
   }
 
 
-  /* Timeline buttons */
+  if (lightboxClose) {
 
-  steps.forEach(function (button) {
-
-    button.addEventListener(
+    lightboxClose.addEventListener(
       "click",
-      function () {
-
-        const step =
-          Number(button.dataset.step);
-
-        showLore(step);
-
-      }
+      closeLightbox
     );
 
-  });
+  }
 
 
-  /* Next button */
+  if (lightbox) {
 
-  if (next) {
-
-    next.addEventListener(
+    lightbox.addEventListener(
       "click",
-      function () {
+      function (event) {
 
-        let nextStep =
-          currentStep + 1;
-
-        if (
-          nextStep >= loreData.length
-        ) {
-          nextStep = 0;
+        if (event.target === lightbox) {
+          closeLightbox();
         }
 
-        showLore(nextStep);
+      }
+    );
+
+  }
+
+
+  document.addEventListener(
+    "keydown",
+    function (event) {
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      }
+
+    }
+  );
+
+
+  /* ---------------------------------------------------------
+     RSVP
+     --------------------------------------------------------- */
+
+  const rsvpForm =
+    document.getElementById("rsvpForm");
+
+  const formNote =
+    document.getElementById("formNote");
+
+
+  if (rsvpForm) {
+
+    rsvpForm.addEventListener(
+      "submit",
+      async function (event) {
+
+        event.preventDefault();
+
+        const button =
+          rsvpForm.querySelector(
+            'button[type="submit"]'
+          );
+
+        if (button) {
+          button.disabled = true;
+          button.textContent =
+            "SENDING...";
+        }
+
+        if (formNote) {
+          formNote.textContent =
+            "Sending your RSVP...";
+        }
+
+
+        const formData =
+          new FormData(rsvpForm);
+
+        const payload = {
+
+          action: "rsvp",
+
+          name:
+            formData.get("name") || "",
+
+          guests:
+            formData.get("guests") || "",
+
+          attendance:
+            formData.get("attendance") || "",
+
+          event:
+            formData.get("event") || "",
+
+          message:
+            formData.get("message") || ""
+
+        };
+
+
+        try {
+
+          const response =
+            await fetch(
+              API_URL,
+              {
+                method: "POST",
+                body: JSON.stringify(payload)
+              }
+            );
+
+
+          const result =
+            await response.json();
+
+
+          if (!result.ok) {
+            throw new Error(
+              result.error ||
+              "Unable to submit RSVP."
+            );
+          }
+
+
+          if (formNote) {
+
+            const attendance =
+              payload.attendance || "";
+
+            if (
+              attendance
+                .toLowerCase()
+                .includes("yes")
+            ) {
+
+              formNote.textContent =
+                "🎉 KNEW IT. SEE YOU AT #ABSON.";
+
+            } else {
+
+              formNote.textContent =
+                "😭 This is deeply disappointing.";
+
+            }
+
+          }
+
+
+          rsvpForm.reset();
+
+          createAbsonConfetti();
+
+        } catch (error) {
+
+          console.error(error);
+
+          if (formNote) {
+
+            formNote.textContent =
+              "Something went wrong. Please try again.";
+
+          }
+
+        } finally {
+
+          if (button) {
+
+            button.disabled = false;
+
+            button.textContent =
+              "LOCK IN MY RSVP ✦";
+
+          }
+
+        }
 
       }
     );
@@ -390,13 +666,259 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
 
-  /* Initial state */
+  /* ---------------------------------------------------------
+     GUEST PHOTO / VIDEO UPLOAD
+     --------------------------------------------------------- */
 
-  showLore(0);
+  const guestForm =
+    document.getElementById(
+      "guestUploadForm"
+    );
 
-});
+  const guestFiles =
+    document.getElementById(
+      "guestFiles"
+    );
+
+  const guestName =
+    document.getElementById(
+      "guestName"
+    );
+
+  const uploadPreview =
+    document.getElementById(
+      "uploadPreview"
+    );
+
+  const uploadStatus =
+    document.getElementById(
+      "uploadStatus"
+    );
+
+
+  if (guestFiles) {
+
+    guestFiles.addEventListener(
+      "change",
+      function () {
+
+        if (!uploadPreview) return;
+
+        uploadPreview.innerHTML = "";
+
+        Array.from(
+          guestFiles.files || []
+        ).forEach(function (file) {
+
+          const pill =
+            document.createElement("div");
+
+          pill.className =
+            "file-pill";
+
+          pill.textContent =
+            file.name;
+
+          uploadPreview.appendChild(
+            pill
+          );
+
+        });
+
+      }
+    );
+
+  }
+
+
+  if (guestForm) {
+
+    guestForm.addEventListener(
+      "submit",
+      async function (event) {
+
+        event.preventDefault();
+
+
+        const files =
+          Array.from(
+            guestFiles
+              ? guestFiles.files || []
+              : []
+          );
+
+
+        if (!files.length) {
+
+          if (uploadStatus) {
+
+            uploadStatus.textContent =
+              "Please choose at least one photo or video.";
+
+          }
+
+          return;
+
+        }
+
+
+        const button =
+          guestForm.querySelector(
+            ".upload-button"
+          );
+
+
+        if (button) {
+
+          button.disabled = true;
+
+          button.textContent =
+            "UPLOADING...";
+
+        }
+
+
+        if (uploadStatus) {
+
+          uploadStatus.textContent =
+            "Sending your evidence to #ABSON...";
+
+        }
+
+
+        try {
+
+          for (const file of files) {
+
+            const base64 =
+              await readFileAsBase64(
+                file
+              );
+
+
+            const payload = {
+
+              action:
+                "uploadGuestFile",
+
+              guestName:
+                guestName
+                  ? guestName.value
+                  : "",
+
+              fileName:
+                file.name,
+
+              mimeType:
+                file.type,
+
+              base64:
+                base64
+
+            };
+
+
+            const response =
+              await fetch(
+                API_URL,
+                {
+                  method: "POST",
+                  body:
+                    JSON.stringify(
+                      payload
+                    )
+                }
+              );
+
+
+            const result =
+              await response.json();
+
+
+            if (!result.ok) {
+
+              throw new Error(
+                result.error ||
+                "Upload failed."
+              );
+
+            }
+
+          }
+
+
+          if (uploadStatus) {
+
+            uploadStatus.textContent =
+              "🎉 Evidence received. #ABSON thanks you.";
+
+          }
+
+
+          guestForm.reset();
+
+          if (uploadPreview) {
+            uploadPreview.innerHTML = "";
+          }
+
+          createAbsonConfetti();
+
+
+        } catch (error) {
+
+          console.error(error);
+
+          if (uploadStatus) {
+
+            uploadStatus.textContent =
+              "Upload failed. Please try again.";
+
+          }
+
+        } finally {
+
+          if (button) {
+
+            button.disabled = false;
+
+            button.textContent =
+              "SEND TO #ABSON →";
+
+          }
+
+        }
+
+      }
+    );
+
+  }
+
+
+  function readFileAsBase64(file) {
+
+    return new Promise(
+      function (resolve, reject) {
+
+        const reader =
+          new FileReader();
+
+        reader.onload =
+          function () {
+
+            resolve(
+              reader.result
+            );
+
+          };
+
+        reader.onerror =
+          reject;
+
+        reader.readAsDataURL(file);
+
+      }
+    );
 
   }
 
 });
-}
