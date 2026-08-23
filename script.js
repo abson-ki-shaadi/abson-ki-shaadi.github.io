@@ -125,4 +125,83 @@ if (guestUploadForm) {
       button.disabled = false;
     }
   });
+  /* =========================================
+   #ABSON INTERACTIVE OPENING
+   ========================================= */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const opening = document.getElementById("opening");
+  const enterBtn = document.getElementById("enterBtn");
+
+  if (!opening || !enterBtn) return;
+
+  enterBtn.addEventListener("click", () => {
+
+    // Prevent double-clicks
+    if (opening.classList.contains("opening-leaving")) return;
+
+    opening.classList.add("opening-leaving");
+
+    enterBtn.disabled = true;
+    enterBtn.innerHTML = "BREAKING NEWS...";
+
+    // Create #ABSON flash
+    const flash = document.createElement("div");
+
+    flash.className = "abson-flash";
+    flash.innerHTML = `
+      <span>#ABSON</span>
+    `;
+
+    document.body.appendChild(flash);
+
+    // Confetti
+    createAbsonConfetti();
+
+    // Remove opening after animation
+    setTimeout(() => {
+      opening.style.display = "none";
+      flash.remove();
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+
+    }, 1500);
+
+  });
+
+
+  function createAbsonConfetti() {
+
+    const pieces = 45;
+
+    for (let i = 0; i < pieces; i++) {
+
+      const piece = document.createElement("span");
+
+      piece.className = "abson-confetti";
+
+      piece.style.left =
+        Math.random() * 100 + "vw";
+
+      piece.style.animationDelay =
+        Math.random() * 0.4 + "s";
+
+      piece.style.transform =
+        `rotate(${Math.random() * 360}deg)`;
+
+      document.body.appendChild(piece);
+
+      setTimeout(() => {
+        piece.remove();
+      }, 2200);
+
+    }
+
+  }
+
+});
 }
