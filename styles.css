@@ -849,4 +849,48 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   .hero-content .countdown small {
     font-size: 6px !important;
   }
+  /* =========================================================
+   FINAL MOBILE HERO TEXT COLOR FIX
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  /* Breaking News */
+  .hero .hero-content p.kicker,
+  .hero .hero-content .kicker {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-shadow: 2px 2px 3px rgba(0,0,0,.45) !important;
+  }
+
+  /* Names */
+  .hero .hero-content .name-strip,
+  .hero .hero-content .name-strip b,
+  .hero .hero-content .name-strip i {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-shadow: 2px 2px 3px rgba(0,0,0,.45) !important;
+  }
+
+  /* Wedding date */
+  .hero .hero-content p.hero-date {
+    color: #ffffff !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    text-shadow: 2px 2px 3px rgba(0,0,0,.45) !important;
+  }
+
+  /* Make the whole hero content safely white */
+  .hero .hero-content {
+    color: #ffffff !important;
+  }
+
+  /* Keep the yellow word yellow */
+  .hero .hero-content h1 span {
+    color: var(--yellow) !important;
+  }
+
+}
 }
