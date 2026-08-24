@@ -16,7 +16,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install feedback loader
+      - name: Install feedback and music loaders
         shell: python
         run: |
           from pathlib import Path
@@ -24,13 +24,24 @@ jobs:
           index = Path('index.html')
           html = index.read_text(encoding='utf-8')
 
-          tag = '<script src="feedback.js?v=1"></script>'
+          feedback_tag = '<script src="feedback.js?v=1"></script>'
+          music_tag = '<script src="music-autoplay.js?v=1"></script>'
           marker = '<script src="script.js"></script>'
 
-          if tag not in html:
-              if marker not in html:
-                  raise SystemExit('Could not find script.js marker in index.html')
-              html = html.replace(marker, tag + '\n' + marker, 1)
+          if marker not in html:
+              raise SystemExit('Could not find script.js marker in index.html')
+
+          changed = False
+
+          if feedback_tag not in html:
+              html = html.replace(marker, feedback_tag + '\n' + marker, 1)
+              changed = True
+
+          if music_tag not in html:
+              html = html.replace(marker, music_tag + '\n' + marker, 1)
+              changed = True
+
+          if changed:
               index.write_text(html, encoding='utf-8')
 
       - name: Commit changes
@@ -39,5 +50,5 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add index.html
           git diff --cached --quiet && exit 0
-          git commit -m "Add live Google Sheets feedback wall"
+          git commit -m "Add live feedback and automatic music startup"
           git push
