@@ -52,3 +52,17 @@
 @media(min-width:701px){#absonWallViewer .awv-image:hover{transform:scale(1.008)}}
 .abson-confetti{background:#ffd447 !important;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.12);opacity:1 !important}.abson-confetti:nth-child(3n){background:#ff6f91 !important}.abson-confetti:nth-child(4n){background:#b7df66 !important}.abson-confetti:nth-child(5n){background:#fff !important}
 @media(max-width:1100px){.guest-wall-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+
+/* =========================================================
+   #ABSON MOBILE GUEST PHOTO LOAD / SIZE FIX
+   The camera-roll buttons contain the images. A lazy image can otherwise
+   leave its button at intrinsic width until the page is scrolled.
+   ========================================================= */
+@media(max-width:700px){
+  #guest-wall .guest-wall-grid{width:100%!important;max-width:100%!important;box-sizing:border-box!important;overflow:hidden!important;}
+  #guest-wall .guest-wall-card{width:100%!important;min-width:100%!important;max-width:100%!important;flex:0 0 100%!important;box-sizing:border-box!important;}
+  #guest-wall .guest-wall-open{display:block!important;width:100%!important;min-width:100%!important;max-width:100%!important;box-sizing:border-box!important;margin:0!important;padding:0!important;border:0!important;background:transparent!important;appearance:none!important;-webkit-appearance:none!important;line-height:0!important;overflow:hidden!important;}
+  #guest-wall .guest-wall-open .guest-wall-media{display:block!important;width:100%!important;max-width:100%!important;height:auto!important;margin:0!important;padding:0!important;border:0!important;}
+  #guest-wall .guest-wall-open .guest-wall-media img{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;min-width:100%!important;object-fit:contain!important;}
+  #guest-wall .guest-wall-open .guest-wall-video{display:flex!important;width:100%!important;min-width:100%!important;box-sizing:border-box!important;}
+}
