@@ -9,20 +9,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Insert camera roll section and stylesheet
+      - name: Insert camera roll section and assets
         run: |
           python3 - <<'PY'
           from pathlib import Path
           p=Path('index.html')
           s=p.read_text(encoding='utf-8')
 
-          # Make sure the dedicated Camera Roll stylesheet is actually loaded.
           stylesheet='<link rel="stylesheet" href="guest-wall.css?v=2">'
           if 'guest-wall.css' not in s:
               marker='<link rel="stylesheet" href="styles.css">'
               s=s.replace(marker, marker+'\n'+stylesheet, 1)
 
-          # Insert the Camera Roll section once, immediately before RSVP.
+          fix_script='<script src="guest-wall-fix.js?v=1"></script>'
+          if 'guest-wall-fix.js' not in s:
+              marker='<script src="script.js"></script>'
+              s=s.replace(marker, fix_script+'\n'+marker, 1)
+
           if 'id="guest-wall"' not in s:
               marker='<!-- =======================================================\n     RSVP\n     ======================================================= -->'
               section='''<!-- =======================================================\n     GUEST CAMERA ROLL\n     ======================================================= -->\n<section class="guest-wall section" id="guest-wall">\n  <div class="abson-watermark" aria-hidden="true">#ABSON</div>\n  <div class="section-heading">\n    <p class="kicker">THE CAMERA ROLL</p>\n    <h2>Show us the evidence.</h2>\n    <p>Swipe through the photos and videos uploaded by everyone at #ABSON.</p>\n  </div>\n  <div class="guest-wall-toolbar"><span class="guest-wall-label">LIVE FROM #ABSON</span></div>\n  <div id="guestWallGrid" class="guest-wall-grid"></div>\n</section>\n\n'''
@@ -36,5 +39,5 @@ jobs:
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add index.html
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Load guest camera roll styling'
+          git commit -m 'Load final guest camera roll fix'
           git push
