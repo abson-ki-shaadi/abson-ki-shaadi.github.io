@@ -4,8 +4,27 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* Opening */
   const opening=document.getElementById("opening"), enterBtn=document.getElementById("enterBtn");
-  function createAbsonConfetti(){for(let i=0;i<45;i++){const p=document.createElement("span");p.className="abson-confetti";p.style.left=Math.random()*100+"vw";p.style.animationDelay=Math.random()*.4+"s";p.style.transform="rotate("+Math.random()*360+"deg)";document.body.appendChild(p);setTimeout(()=>p.remove(),2200)}}
-  if(opening&&enterBtn) enterBtn.addEventListener("click",()=>{if(opening.classList.contains("opening-leaving"))return;opening.classList.add("opening-leaving");enterBtn.disabled=true;enterBtn.textContent="BREAKING NEWS...";const flash=document.createElement("div");flash.className="abson-flash";flash.innerHTML="<span>#ABSON</span>";document.body.appendChild(flash);createAbsonConfetti();setTimeout(()=>{opening.classList.add("hidden");setTimeout(()=>{opening.style.display="none";flash.remove()},400)},1150)});
+  function createAbsonConfetti(){
+    const colors=["#ffd447","#ff6f91","#b7df66","#ffffff"];
+    const layer=document.createElement("div");
+    layer.id="abson-confetti-layer";
+    layer.style.cssText="position:fixed;inset:0;width:100vw;height:100vh;z-index:2147483647;pointer-events:none;overflow:hidden;";
+    document.body.appendChild(layer);
+    for(let i=0;i<70;i++){
+      const p=document.createElement("span");
+      const size=6+Math.random()*7;
+      p.style.cssText="position:absolute;display:block;top:-30px;left:"+(Math.random()*100)+"vw;width:"+size+"px;height:"+(size*1.7)+"px;background:"+colors[i%colors.length]+";border-radius:2px;opacity:1;transform:rotate("+(Math.random()*360)+"deg);animation:absonConfettiReal 2.2s cubic-bezier(.2,.8,.3,1) forwards;animation-delay:"+(Math.random()*.25)+"s;";
+      layer.appendChild(p);
+    }
+    setTimeout(()=>layer.remove(),2800);
+  }
+  if(!document.getElementById("abson-confetti-real-style")){
+    const style=document.createElement("style");
+    style.id="abson-confetti-real-style";
+    style.textContent="@keyframes absonConfettiReal{0%{transform:translate3d(0,-30px,0) rotate(0deg);opacity:1}100%{transform:translate3d("+(Math.random()*160-80)+"px,110vh,0) rotate(720deg);opacity:0}}";
+    document.head.appendChild(style);
+  }
+  if(opening&&enterBtn) enterBtn.addEventListener("click",()=>{if(opening.classList.contains("opening-leaving"))return;createAbsonConfetti();opening.classList.add("opening-leaving");enterBtn.disabled=true;enterBtn.textContent="BREAKING NEWS...";const flash=document.createElement("div");flash.className="abson-flash";flash.innerHTML="<span>#ABSON</span>";document.body.appendChild(flash);setTimeout(()=>{opening.classList.add("hidden");setTimeout(()=>{opening.style.display="none";flash.remove()},400)},1150)});
 
   /* Countdown */
   const weddingDate=new Date("2027-01-09T15:00:00+05:30").getTime();
@@ -45,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if(guestFiles)guestFiles.addEventListener("change",()=>{if(!uploadPreview)return;uploadPreview.innerHTML="";Array.from(guestFiles.files||[]).forEach(file=>{const p=document.createElement("div");p.className="file-pill";p.textContent=file.name;uploadPreview.appendChild(p)})});
   if(guestForm)guestForm.addEventListener("submit",async e=>{e.preventDefault();const files=Array.from(guestFiles?guestFiles.files||[]:[]);if(!files.length){if(uploadStatus)uploadStatus.textContent="Please choose at least one photo or video.";return}const button=guestForm.querySelector(".upload-button");if(button){button.disabled=true;button.textContent="UPLOADING..."}if(uploadStatus)uploadStatus.textContent="Sending your evidence to #ABSON...";try{for(const file of files){const payload={action:"uploadGuestFile",guestName:guestName?guestName.value:"",fileName:file.name,mimeType:file.type,base64:await readFileAsBase64(file)};const r=await fetch(API_URL,{method:"POST",body:JSON.stringify(payload)}),result=await r.json();if(!result.ok)throw new Error(result.error||"Upload failed")}if(uploadStatus)uploadStatus.textContent="🎉 Evidence received. #ABSON has it.";guestForm.reset();if(uploadPreview)uploadPreview.innerHTML="";loadGuestWall()}catch(err){console.error(err);if(uploadStatus)uploadStatus.textContent="Upload failed. Please try again."}finally{if(button){button.disabled=false;button.textContent="SEND TO #ABSON →"}}});
 
-  /* Live Guest Wall — injected so the existing index layout stays untouched */
+  /* Live Guest Wall */
   function ensureGuestWall(){if(document.getElementById("guest-wall"))return document.getElementById("guest-wall");const anchor=document.getElementById("guest-photos");if(!anchor)return null;const link=document.createElement("link");link.rel="stylesheet";link.href="guest-wall.css";document.head.appendChild(link);const section=document.createElement("section");section.id="guest-wall";section.className="guest-wall section";section.innerHTML='<div class="abson-watermark" aria-hidden="true">#ABSON</div><div class="section-heading"><p class="kicker">THE PEOPLE’S CAMERA ROLL</p><h2>Live from the chaos.</h2><p>Photos and videos shared by the people who were actually there.</p></div><div class="guest-wall-toolbar"><div class="guest-wall-live"><span></span>LIVE CAMERA ROLL</div><button class="guest-wall-refresh" id="guestWallRefresh" type="button">REFRESH ↻</button></div><p id="guestWallStatus" class="guest-wall-status">Loading the latest evidence…</p><div id="guestWallGrid" class="guest-wall-grid"></div>';anchor.insertAdjacentElement("afterend",section);document.querySelectorAll("#guest-wall .abson-watermark").forEach(x=>x.style.zIndex="0");const refresh=document.getElementById("guestWallRefresh");if(refresh)refresh.addEventListener("click",loadGuestWall);return section}
   function renderGuestWall(items){const grid=document.getElementById("guestWallGrid");if(!grid)return;if(!items||!items.length){grid.innerHTML='<div class="guest-wall-empty"><strong>NO EVIDENCE YET.</strong>Be the first to add to the #ABSON camera roll.</div>';return}grid.innerHTML=items.map(x=>{const url=x.url||x.link||x.fileUrl||"",name=x.name||x.guestName||"Anonymous #ABSON",type=(x.type||x.mimeType||"").toLowerCase();if(!url)return"";const safeName=String(name).replace(/[&<>\"]/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[m]));const media=type.includes("video")?'<a class="guest-wall-video" href="'+url+'" target="_blank" rel="noopener">▶ WATCH VIDEO</a>':'<a href="'+url+'" target="_blank" rel="noopener"><img class="guest-wall-media" src="'+url+'" alt="'+safeName+' — #ABSON" loading="lazy"></a>';return'<article class="guest-wall-card">'+media+'<div class="guest-wall-meta"><strong>'+safeName+'</strong><small>#ABSON CAMERA ROLL</small></div></article>'}).join("")}
   async function loadGuestWall(){const section=ensureGuestWall();if(!section)return;const status=document.getElementById("guestWallStatus");if(status)status.textContent="Loading the latest evidence…";try{const r=await fetch(API_URL+"?action=guestPhotos&t="+Date.now(),{cache:"no-store"});if(!r.ok)throw new Error("request failed");const data=await r.json();if(!data.ok)throw new Error(data.error||"feed unavailable");renderGuestWall(data.photos||[]);if(status)status.textContent="Updated just now."}catch(err){console.warn("#ABSON guest wall:",err);renderGuestWall([]);if(status)status.textContent="The live camera roll is getting ready."}}
