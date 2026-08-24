@@ -4,27 +4,83 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* Opening */
   const opening=document.getElementById("opening"), enterBtn=document.getElementById("enterBtn");
+
+  /* Mobile-safe confetti: uses requestAnimationFrame instead of CSS animation so it also works on iPhone/Android. */
   function createAbsonConfetti(){
+    const old=document.getElementById("abson-confetti-layer");
+    if(old)old.remove();
     const colors=["#ffd447","#ff6f91","#b7df66","#ffffff"];
     const layer=document.createElement("div");
     layer.id="abson-confetti-layer";
-    layer.style.cssText="position:fixed;inset:0;width:100vw;height:100vh;z-index:2147483647;pointer-events:none;overflow:hidden;";
+    layer.setAttribute("aria-hidden","true");
+    layer.style.cssText="position:fixed;left:0;top:0;width:100%;height:100%;height:100dvh;z-index:2147483647;pointer-events:none;overflow:hidden;display:block;visibility:visible;opacity:1;";
     document.body.appendChild(layer);
-    for(let i=0;i<70;i++){
+
+    const pieces=[];
+    const count=Math.min(85,Math.max(55,Math.floor(window.innerWidth/4)));
+    for(let i=0;i<count;i++){
       const p=document.createElement("span");
-      const size=6+Math.random()*7;
-      p.style.cssText="position:absolute;display:block;top:-30px;left:"+(Math.random()*100)+"vw;width:"+size+"px;height:"+(size*1.7)+"px;background:"+colors[i%colors.length]+";border-radius:2px;opacity:1;transform:rotate("+(Math.random()*360)+"deg);animation:absonConfettiReal 2.2s cubic-bezier(.2,.8,.3,1) forwards;animation-delay:"+(Math.random()*.25)+"s;";
+      const w=5+Math.random()*7;
+      const h=8+Math.random()*12;
+      p.style.cssText="position:absolute;display:block;left:0;top:0;width:"+w+"px;height:"+h+"px;background:"+colors[i%colors.length]+";border-radius:2px;will-change:transform,opacity;opacity:1;";
       layer.appendChild(p);
+      pieces.push({
+        el:p,
+        x:Math.random()*window.innerWidth,
+        y:-30-Math.random()*window.innerHeight*.35,
+        vx:(Math.random()-.5)*2.2,
+        vy:2.5+Math.random()*3.8,
+        gravity:.055+Math.random()*.045,
+        rotation:Math.random()*360,
+        spin:(Math.random()-.5)*14,
+        sway:Math.random()*Math.PI*2,
+        swaySpeed:.025+Math.random()*.035,
+        opacity:1
+      });
     }
-    setTimeout(()=>layer.remove(),2800);
+
+    let start=performance.now();
+    function frame(now){
+      const elapsed=now-start;
+      pieces.forEach(function(q){
+        q.y+=q.vy;
+        q.vy+=q.gravity;
+        q.x+=q.vx+Math.sin(q.sway)*.7;
+        q.sway+=q.swaySpeed;
+        q.rotation+=q.spin;
+        q.opacity=Math.max(0,1-Math.max(0,q.y-window.innerHeight*.55)/(window.innerHeight*.65));
+        q.el.style.transform="translate3d("+q.x+"px,"+q.y+"px,0) rotate("+q.rotation+"deg)";
+        q.el.style.opacity=String(q.opacity);
+      });
+      if(elapsed<3200){
+        requestAnimationFrame(frame);
+      }else if(layer.parentNode){
+        layer.remove();
+      }
+    }
+    requestAnimationFrame(frame);
   }
-  if(!document.getElementById("abson-confetti-real-style")){
-    const style=document.createElement("style");
-    style.id="abson-confetti-real-style";
-    style.textContent="@keyframes absonConfettiReal{0%{transform:translate3d(0,-30px,0) rotate(0deg);opacity:1}100%{transform:translate3d("+(Math.random()*160-80)+"px,110vh,0) rotate(720deg);opacity:0}}";
-    document.head.appendChild(style);
-  }
-  if(opening&&enterBtn) enterBtn.addEventListener("click",()=>{if(opening.classList.contains("opening-leaving"))return;createAbsonConfetti();opening.classList.add("opening-leaving");enterBtn.disabled=true;enterBtn.textContent="BREAKING NEWS...";const flash=document.createElement("div");flash.className="abson-flash";flash.innerHTML="<span>#ABSON</span>";document.body.appendChild(flash);setTimeout(()=>{opening.classList.add("hidden");setTimeout(()=>{opening.style.display="none";flash.remove()},400)},1150)});
+
+  if(opening&&enterBtn) enterBtn.addEventListener("click",()=>{
+    if(opening.classList.contains("opening-leaving"))return;
+    /* Fire before changing the opening state so mobile browsers cannot lose the animation during the transition. */
+    createAbsonConfetti();
+    opening.classList.add("opening-leaving");
+    enterBtn.disabled=true;
+    enterBtn.textContent="BREAKING NEWS...";
+    const flash=document.createElement("div");
+    flash.className="abson-flash";
+    flash.innerHTML="<span>#ABSON</span>";
+    flash.style.zIndex="2147483646";
+    document.body.appendChild(flash);
+    setTimeout(()=>{
+      opening.classList.add("hidden");
+      setTimeout(()=>{
+        opening.style.display="none";
+        flash.remove();
+      },400);
+    },1150);
+  });
 
   /* Countdown */
   const weddingDate=new Date("2027-01-09T15:00:00+05:30").getTime();
