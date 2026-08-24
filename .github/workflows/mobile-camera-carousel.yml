@@ -18,62 +18,87 @@ jobs:
       - name: Patch script.js once
         shell: bash
         run: |
-          if grep -q '#ABSON MOBILE CAMERA ROLL CAROUSEL PATCH' script.js; then
-            echo 'Camera carousel patch already present.'
-            exit 0
+          if ! grep -q '#ABSON MOBILE CAMERA ROLL CAROUSEL PATCH' script.js; then
+            cat > /tmp/camera_patch.js <<'PATCH'
+            /* #ABSON MOBILE CAMERA ROLL CAROUSEL PATCH */
+            (function(){
+              function init(){
+                const wall=document.getElementById('guest-wall');
+                if(!wall) return false;
+                const grid=document.getElementById('guestWallGrid');
+                const toolbar=wall.querySelector('.guest-wall-toolbar');
+                if(!grid||!toolbar) return false;
+                if(!wall.querySelector('.camera-mobile-nav')){
+                  const nav=document.createElement('div');
+                  nav.className='camera-mobile-nav';
+                  nav.innerHTML='<button type="button" class="camera-mobile-arrow" data-dir="-1" aria-label="Previous photo">←</button><span class="camera-mobile-count">01 / 01</span><button type="button" class="camera-mobile-arrow" data-dir="1" aria-label="Next photo">→</button>';
+                  toolbar.appendChild(nav);
+                  nav.querySelector('[data-dir="-1"]').addEventListener('click',()=>move(-1));
+                  nav.querySelector('[data-dir="1"]').addEventListener('click',()=>move(1));
+                }
+                let index=0,startX=0,startY=0;
+                function cards(){return Array.from(grid.querySelectorAll('.guest-wall-card'));}
+                function update(){
+                  const list=cards(),count=wall.querySelector('.camera-mobile-count');
+                  if(!list.length){if(count)count.textContent='00 / 00';return;}
+                  if(index>=list.length)index=0;
+                  if(index<0)index=list.length-1;
+                  grid.style.transform='translate3d(-'+(index*100)+'%,0,0)';
+                  if(count)count.textContent=String(index+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
+                }
+                function move(dir){index+=dir;update();}
+                grid.addEventListener('touchstart',e=>{if(e.touches.length){startX=e.touches[0].clientX;startY=e.touches[0].clientY}},{passive:true});
+                grid.addEventListener('touchend',e=>{if(!e.changedTouches.length)return;const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.15)move(dx<0?1:-1)},{passive:true});
+                new MutationObserver(()=>{index=0;update()}).observe(grid,{childList:true});
+                document.addEventListener('keydown',e=>{if(window.matchMedia('(max-width: 700px)').matches&&document.getElementById('guest-wall')){if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)}});
+                update();
+                return true;
+              }
+              if(!init()){
+                const obs=new MutationObserver(()=>{if(init())obs.disconnect()});
+                obs.observe(document.body,{childList:true,subtree:true});
+              }
+            })();
+            PATCH
+            python3 - <<'PY'
+            from pathlib import Path
+            p=Path('script.js')
+            s=p.read_text(encoding='utf-8')
+            patch=Path('/tmp/camera_patch.js').read_text(encoding='utf-8')
+            p.write_text(s.rstrip()+'\n\n'+patch+'\n',encoding='utf-8')
+            PY
           fi
 
-          cat > /tmp/camera_patch.js <<'PATCH'
-          /* #ABSON MOBILE CAMERA ROLL CAROUSEL PATCH */
-          (function(){
-            function init(){
-              const wall=document.getElementById('guest-wall');
-              if(!wall) return false;
-              const grid=document.getElementById('guestWallGrid');
-              const toolbar=wall.querySelector('.guest-wall-toolbar');
-              if(!grid||!toolbar) return false;
-              if(!wall.querySelector('.camera-mobile-nav')){
-                const nav=document.createElement('div');
-                nav.className='camera-mobile-nav';
-                nav.innerHTML='<button type="button" class="camera-mobile-arrow" data-dir="-1" aria-label="Previous photo">←</button><span class="camera-mobile-count">01 / 01</span><button type="button" class="camera-mobile-arrow" data-dir="1" aria-label="Next photo">→</button>';
-                toolbar.appendChild(nav);
-                nav.querySelector('[data-dir="-1"]').addEventListener('click',()=>move(-1));
-                nav.querySelector('[data-dir="1"]').addEventListener('click',()=>move(1));
-              }
-              let index=0,startX=0,startY=0;
-              function cards(){return Array.from(grid.querySelectorAll('.guest-wall-card'));}
-              function update(){
-                const list=cards(),count=wall.querySelector('.camera-mobile-count');
-                if(!list.length){if(count)count.textContent='00 / 00';return;}
-                if(index>=list.length)index=0;
-                if(index<0)index=list.length-1;
-                grid.style.transform='translate3d(-'+(index*100)+'%,0,0)';
-                if(count)count.textContent=String(index+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
-              }
-              function move(dir){index+=dir;update();}
-              grid.addEventListener('touchstart',e=>{if(e.touches.length){startX=e.touches[0].clientX;startY=e.touches[0].clientY}},{passive:true});
-              grid.addEventListener('touchend',e=>{if(!e.changedTouches.length)return;const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.15)move(dx<0?1:-1)},{passive:true});
-              new MutationObserver(()=>{index=0;update()}).observe(grid,{childList:true});
-              document.addEventListener('keydown',e=>{if(window.matchMedia('(max-width: 700px)').matches&&document.getElementById('guest-wall')){if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)}});
-              update();
-              return true;
-            }
-            if(!init()){
-              const obs=new MutationObserver(()=>{if(init())obs.disconnect()});
-              obs.observe(document.body,{childList:true,subtree:true});
-            }
-          })();
-          PATCH
+      - name: Patch guest-wall.css once
+        shell: bash
+        run: |
+          if ! grep -q 'CAMERA MOBILE CAROUSEL CONTROLS' guest-wall.css; then
+            cat >> guest-wall.css <<'CSS'
 
-          python3 - <<'PY'
-          from pathlib import Path
-          p=Path('script.js')
-          s=p.read_text(encoding='utf-8')
-          patch=Path('/tmp/camera_patch.js').read_text(encoding='utf-8')
-          p.write_text(s.rstrip()+'\n\n'+patch+'\n',encoding='utf-8')
-          PY
+/* =========================================================
+   CAMERA MOBILE CAROUSEL CONTROLS
+   ========================================================= */
+.camera-mobile-nav{display:none}
+@media(max-width:700px){
+  .guest-wall-toolbar{position:relative;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+  .guest-wall-toolbar .guest-wall-live{flex:1 1 auto}
+  .guest-wall-toolbar .guest-wall-refresh{order:3}
+  .camera-mobile-nav{display:flex;align-items:center;gap:10px;order:2}
+  .camera-mobile-arrow{width:52px;height:52px;border:2px solid #171717;background:#171717;color:#fff;font:900 24px/1 'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;box-shadow:4px 4px 0 #000;cursor:pointer;-webkit-tap-highlight-color:transparent}
+  .camera-mobile-arrow:active{transform:translate(2px,2px);box-shadow:2px 2px 0 #000}
+  .camera-mobile-count{min-width:58px;text-align:center;font:900 14px/1 'DM Sans',sans-serif;letter-spacing:.08em}
 
-      - name: Commit carousel patch
+  .guest-wall-grid{display:flex!important;flex-wrap:nowrap!important;overflow:hidden!important;overflow-x:hidden!important;scroll-snap-type:none!important;scroll-behavior:auto!important;gap:0!important;padding:4px 4px 12px!important;width:100%!important;transform:translate3d(0,0,0);transition:transform .35s cubic-bezier(.2,.8,.2,1);touch-action:pan-y!important}
+  .guest-wall-card{flex:0 0 100%!important;width:100%!important;min-width:100%!important;max-width:100%!important;scroll-snap-align:none!important;box-shadow:4px 4px 0 #171717!important}
+  .guest-wall-card .guest-wall-media{width:100%!important;height:auto!important}
+  .guest-wall-card .guest-wall-media img,.guest-wall-card .guest-wall-media>img{display:block!important;width:100%!important;height:auto!important;max-width:100%!important;object-fit:contain!important}
+  .guest-wall-card .guest-wall-meta{padding:12px 10px!important}
+  .guest-wall-card .guest-wall-meta strong{font-size:11px!important}
+}
+CSS
+          fi
+
+      - name: Commit carousel changes
         shell: bash
         run: |
           if git diff --quiet; then
@@ -82,6 +107,6 @@ jobs:
           fi
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add script.js
-          git commit -m 'Enable mobile camera roll carousel'
+          git add script.js guest-wall.css
+          git commit -m 'Make mobile camera roll a feedback-style carousel'
           git push
