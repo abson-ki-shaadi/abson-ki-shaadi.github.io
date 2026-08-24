@@ -24,15 +24,18 @@
 #absonWallViewer .awv-mark{font-size:30px!important;color:rgba(255,255,255,.22)!important;text-shadow:0 2px 10px rgba(0,0,0,.3)}
 
 @media(max-width:700px){
-  /* PHONE: camera roll becomes a one-card-at-a-time swipe carousel. */
   .guest-wall-toolbar{align-items:flex-start}
-  .guest-wall-grid{display:flex!important;grid-template-columns:none!important;gap:0!important;width:100%!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x mandatory!important;scroll-behavior:smooth!important;-webkit-overflow-scrolling:touch!important;scrollbar-width:none!important;padding:4px 4px 12px!important;box-sizing:border-box!important;align-items:stretch!important;overscroll-behavior-x:contain!important;touch-action:pan-x!important}
-  .guest-wall-grid::-webkit-scrollbar{display:none!important}
-  .guest-wall-card{flex:0 0 100%!important;width:100%!important;max-width:100%!important;min-width:100%!important;box-sizing:border-box!important;scroll-snap-align:center!important;scroll-snap-stop:always!important;box-shadow:4px 4px 0 #171717!important}
-  .guest-wall-media{height:auto!important}
-  .guest-wall-media img,.guest-wall-media>img{width:100%!important;height:auto!important;max-width:100%!important}
+  .guest-wall-grid{display:block!important;grid-template-columns:none!important;gap:0!important;width:100%!important;overflow:hidden!important;overflow-x:hidden!important;transform:none!important;transition:none!important;padding:4px 4px 12px!important;box-sizing:border-box!important;align-items:stretch!important;touch-action:pan-y!important}
+  .guest-wall-card{display:none!important;flex:none!important;width:100%!important;max-width:100%!important;min-width:100%!important;box-sizing:border-box!important;box-shadow:4px 4px 0 #171717!important}
+  .guest-wall-card:first-child{display:block!important}
+  .guest-wall-card .guest-wall-media{height:auto!important}
+  .guest-wall-card .guest-wall-media img,.guest-wall-card .guest-wall-media>img{width:100%!important;height:auto!important;max-width:100%!important}
   .guest-wall-video{min-height:200px;height:auto}
-  .guest-wall-empty{flex:0 0 100%!important;min-width:100%!important;box-sizing:border-box!important}
+  .guest-wall-empty{display:block!important;box-sizing:border-box!important}
+
+  /* When the NEXT control is tapped, show the second card in-place. */
+  #guest-wall:has(.camera-mobile-arrow[data-dir="1"]:focus) .guest-wall-card:first-child{display:none!important}
+  #guest-wall:has(.camera-mobile-arrow[data-dir="1"]:focus) .guest-wall-card:nth-child(2){display:block!important}
 
   #absonWallViewer{padding:54px 5px 62px!important;touch-action:none!important}
   #absonWallViewer .awv-stage{padding:0!important;width:100%!important;height:100%!important}
@@ -46,12 +49,6 @@
   #absonWallViewer .awv-mark{left:10px!important;top:12px!important;font-size:20px!important}
 }
 
-@media(min-width:701px){
-  #absonWallViewer .awv-image:hover{transform:scale(1.008)}
-}
-
-/* #ABSON OPENING CONFETTI */
+@media(min-width:701px){#absonWallViewer .awv-image:hover{transform:scale(1.008)}}
 .abson-confetti{background:#ffd447 !important;border-radius:2px;box-shadow:0 0 0 1px rgba(255,255,255,.12);opacity:1 !important}.abson-confetti:nth-child(3n){background:#ff6f91 !important}.abson-confetti:nth-child(4n){background:#b7df66 !important}.abson-confetti:nth-child(5n){background:#fff !important}
-
 @media(max-width:1100px){.guest-wall-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:700px){.guest-wall-grid{display:flex!important;grid-template-columns:none!important;gap:0!important;align-items:stretch!important}.guest-wall-card{flex:0 0 100%!important;min-width:100%!important}.guest-wall-video{min-height:200px;height:auto}.guest-wall-empty strong{font-size:38px}}
