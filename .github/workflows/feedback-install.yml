@@ -1,6 +1,7 @@
 name: Add ABSON feedback section
 
 on:
+  workflow_dispatch:
   push:
     paths:
       - '.github/workflows/feedback-install.yml'
@@ -78,15 +79,10 @@ jobs:
       <div class="abson-feedback-live">LIVE FEEDBACK</div>
       <div id="absonFeedbackCount" class="abson-feedback-count">0 MESSAGES</div>
     </div>
-    <div id="absonFeedbackViewport">
-      <div id="absonFeedbackTrack"></div>
-    </div>
+    <div id="absonFeedbackViewport"><div id="absonFeedbackTrack"></div></div>
     <div id="absonFeedbackControls">
       <button id="absonFeedbackPrev" type="button" aria-label="Previous feedback">‹</button>
-      <div>
-        <div id="absonFeedbackCounter">00 / 00</div>
-        <div id="absonFeedbackDots"></div>
-      </div>
+      <div><div id="absonFeedbackCounter">00 / 00</div><div id="absonFeedbackDots"></div></div>
       <button id="absonFeedbackNext" type="button" aria-label="Next feedback">›</button>
     </div>
     <p id="absonFeedbackUpdated" class="abson-feedback-updated">Updated just now · new messages appear automatically.</p>
