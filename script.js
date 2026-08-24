@@ -78,3 +78,44 @@ setInterval(loadGuestWall,30000);
 loadFeedbackWall();
 setInterval(loadFeedbackWall,30000);
 });
+
+/* #ABSON MOBILE CAMERA ROLL CAROUSEL PATCH */
+(function(){
+  function init(){
+    const wall=document.getElementById('guest-wall');
+    if(!wall) return false;
+    const grid=document.getElementById('guestWallGrid');
+    const toolbar=wall.querySelector('.guest-wall-toolbar');
+    if(!grid||!toolbar) return false;
+    if(!wall.querySelector('.camera-mobile-nav')){
+      const nav=document.createElement('div');
+      nav.className='camera-mobile-nav';
+      nav.innerHTML='<button type="button" class="camera-mobile-arrow" data-dir="-1" aria-label="Previous photo">←</button><span class="camera-mobile-count">01 / 01</span><button type="button" class="camera-mobile-arrow" data-dir="1" aria-label="Next photo">→</button>';
+      toolbar.appendChild(nav);
+      nav.querySelector('[data-dir="-1"]').addEventListener('click',()=>move(-1));
+      nav.querySelector('[data-dir="1"]').addEventListener('click',()=>move(1));
+    }
+    let index=0,startX=0,startY=0;
+    function cards(){return Array.from(grid.querySelectorAll('.guest-wall-card'));}
+    function update(){
+      const list=cards(),count=wall.querySelector('.camera-mobile-count');
+      if(!list.length){if(count)count.textContent='00 / 00';return;}
+      if(index>=list.length)index=0;
+      if(index<0)index=list.length-1;
+      grid.style.transform='translate3d(-'+(index*100)+'%,0,0)';
+      if(count)count.textContent=String(index+1).padStart(2,'0')+' / '+String(list.length).padStart(2,'0');
+    }
+    function move(dir){index+=dir;update();}
+    grid.addEventListener('touchstart',e=>{if(e.touches.length){startX=e.touches[0].clientX;startY=e.touches[0].clientY}},{passive:true});
+    grid.addEventListener('touchend',e=>{if(!e.changedTouches.length)return;const dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;if(Math.abs(dx)>50&&Math.abs(dx)>Math.abs(dy)*1.15)move(dx<0?1:-1)},{passive:true});
+    new MutationObserver(()=>{index=0;update()}).observe(grid,{childList:true});
+    document.addEventListener('keydown',e=>{if(window.matchMedia('(max-width: 700px)').matches&&document.getElementById('guest-wall')){if(e.key==='ArrowLeft')move(-1);if(e.key==='ArrowRight')move(1)}});
+    update();
+    return true;
+  }
+  if(!init()){
+    const obs=new MutationObserver(()=>{if(init())obs.disconnect()});
+    obs.observe(document.body,{childList:true,subtree:true});
+  }
+})();
+
