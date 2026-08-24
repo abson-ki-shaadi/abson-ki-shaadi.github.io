@@ -24,19 +24,19 @@
 #absonWallViewer .awv-mark{font-size:30px!important;color:rgba(255,255,255,.22)!important;text-shadow:0 2px 10px rgba(0,0,0,.3)}
 
 @media(max-width:700px){
-  .guest-wall-toolbar{align-items:flex-start}
-  .guest-wall-grid{display:block!important;grid-template-columns:none!important;gap:0!important;width:100%!important;overflow:hidden!important;overflow-x:hidden!important;transform:none!important;transition:none!important;padding:4px 4px 12px!important;box-sizing:border-box!important;align-items:stretch!important;touch-action:pan-y!important}
-  .guest-wall-card{display:none!important;flex:none!important;width:100%!important;max-width:100%!important;min-width:100%!important;box-sizing:border-box!important;box-shadow:4px 4px 0 #171717!important}
-  .guest-wall-card:first-child{display:block!important}
+  .guest-wall-toolbar{align-items:center!important;gap:10px!important}
+  .guest-wall-live{flex:1;white-space:nowrap}
+  .guest-wall-refresh{display:none!important}
+  .camera-mobile-nav{display:flex!important;align-items:center;justify-content:flex-end;gap:8px;flex-shrink:0}
+  .camera-mobile-arrow{width:42px;height:38px;border:1px solid #111;background:#111;color:#fff;display:inline-flex;align-items:center;justify-content:center;font:800 20px/1 'DM Sans',sans-serif;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent}
+  .camera-mobile-arrow:active{background:#f6d84a;color:#111}
+  .camera-mobile-count{font:800 10px 'DM Sans',sans-serif;letter-spacing:.1em;color:#111;min-width:55px;text-align:center}
+  .guest-wall-grid{display:flex!important;flex-wrap:nowrap!important;grid-template-columns:none!important;gap:0!important;width:100%!important;overflow:hidden!important;overflow-x:hidden!important;transform:translate3d(0,0,0);transition:transform .38s cubic-bezier(.22,.61,.36,1)!important;padding:4px 4px 12px!important;box-sizing:border-box!important;align-items:flex-start!important;touch-action:pan-y!important;will-change:transform!important}
+  .guest-wall-card{display:block!important;flex:0 0 100%!important;width:100%!important;max-width:100%!important;min-width:100%!important;box-sizing:border-box!important;box-shadow:4px 4px 0 #171717!important;align-self:flex-start!important}
   .guest-wall-card .guest-wall-media{height:auto!important}
   .guest-wall-card .guest-wall-media img,.guest-wall-card .guest-wall-media>img{width:100%!important;height:auto!important;max-width:100%!important}
   .guest-wall-video{min-height:200px;height:auto}
-  .guest-wall-empty{display:block!important;box-sizing:border-box!important}
-
-  /* When the NEXT control is tapped, show the second card in-place. */
-  #guest-wall:has(.camera-mobile-arrow[data-dir="1"]:focus) .guest-wall-card:first-child{display:none!important}
-  #guest-wall:has(.camera-mobile-arrow[data-dir="1"]:focus) .guest-wall-card:nth-child(2){display:block!important}
-
+  .guest-wall-empty{display:block!important;box-sizing:border-box!important;flex:0 0 100%!important}
   #absonWallViewer{padding:54px 5px 62px!important;touch-action:none!important}
   #absonWallViewer .awv-stage{padding:0!important;width:100%!important;height:100%!important}
   #absonWallViewer .awv-image,#absonWallViewer .awv-video{max-width:calc(100vw - 20px)!important;max-height:calc(100dvh - 132px)!important;box-shadow:0 16px 45px rgba(0,0,0,.7)!important}
