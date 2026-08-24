@@ -1,4 +1,4 @@
-/* #ABSON — START MUSIC WHEN THE MAIN PAGE OPENS */
+/* #ABSON — MUSIC AUTOPLAY + PLAY/PAUSE CONTROL */
 (function(){
   function setupMusic(){
     const music=document.getElementById('weddingMusic');
@@ -14,8 +14,10 @@
 
     function markPlaying(){
       if(musicBtn){
-        musicBtn.textContent='♫ MUSIC ON';
+        musicBtn.textContent='⏸ PAUSE';
         musicBtn.classList.add('playing');
+        musicBtn.setAttribute('aria-label','Pause music');
+        musicBtn.setAttribute('title','Pause music');
       }
     }
 
@@ -23,6 +25,8 @@
       if(musicBtn){
         musicBtn.textContent='♪ MUSIC';
         musicBtn.classList.remove('playing');
+        musicBtn.setAttribute('aria-label','Play music');
+        musicBtn.setAttribute('title','Play music');
       }
     }
 
@@ -42,7 +46,7 @@
     }
 
     const unlock=()=>{
-      startMusic();
+      if(music.paused)startMusic();
       document.removeEventListener('pointerdown',unlock);
       document.removeEventListener('touchstart',unlock);
       document.removeEventListener('keydown',unlock);
@@ -53,7 +57,10 @@
     document.addEventListener('keydown',unlock,{passive:true});
 
     if(musicBtn){
-      musicBtn.addEventListener('click',()=>{
+      musicBtn.addEventListener('click',(event)=>{
+        event.preventDefault();
+        event.stopPropagation();
+
         if(music.paused){
           startMusic();
         }else{
@@ -62,6 +69,9 @@
         }
       });
     }
+
+    music.addEventListener('play',markPlaying);
+    music.addEventListener('pause',markOff);
   }
 
   if(document.readyState==='loading'){
