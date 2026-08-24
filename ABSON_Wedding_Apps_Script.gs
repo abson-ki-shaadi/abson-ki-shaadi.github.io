@@ -11,7 +11,14 @@ function setup(){const ss=SpreadsheetApp.openById(SPREADSHEET_ID);const r=getOrC
 
 function doGet(e){try{const action=String((e&&e.parameter&&e.parameter.action)||'').trim();if(action==='guestPhotos')return getGuestPhotos_();return jsonResponse_({ok:true,project:'#ABSON Wedding Website',message:'Wedding endpoint is working',timestamp:new Date().toISOString()})}catch(err){return jsonResponse_({ok:false,error:String(err&&err.message||err)})}}
 
-function getGuestPhotos_(){const photos=[];const seen={};try{const ss=SpreadsheetApp.openById(SPREADSHEET_ID);const sheet=ss.getSheetByName(PHOTO_SHEET);if(sheet&&sheet.getLastRow()>=2){const rows=sheet.getRange(2,1,sheet.getLastRow()-1,7).getValues();rows.reverse().forEach(function(r){const fileId=String(r[6]||'').trim();const url=String(r[5]||'').trim();if(!fileId&&!url)return;const key=fileId||url;if(seen[key])return;seen[key]=true;let thumb=url;if(fileId){try{const file=DriveApp.getFileById(fileId);try{file.setSharing(DriveApp.Access.ANYONE_WITH_LINK,DriveApp.Permission.VIEW)}catch(ignore){}thumb='https://drive.google.com/thumbnail?id='+encodeURIComponent(fileId)+'&sz=w1200'}catch(ignore){}}photos.push({timestamp:r[0]?new Date(r[0]).toISOString():'',name:String(r[1]||'Anonymous #ABSON'),fileName:String(r[2]||''),type:String(r[3]||''),size:Number(r[4]||0),url:thumb,fileId:fileId})})}}
+function getGuestPhotos_(){const photos=[];const seen={};try{const ss=SpreadsheetApp.openById(SPREADSHEET_ID);const sheet=ss.getSheetByName(PHOTO_SHEET);if(sheet&&sheet.getLastRow()>=2){const rows=sheet.getRange(2,1,sheet.getLastRow()-1,7).getValues();rows.reverse().forEach(function(r){const fileId=String(r[6]||'').trim();const url=String(r[5]||'').trim();if(!fileId&&!url)return;const key=fileId||url;if(seen[key])return;seen[key]=true;
+let file=null;
+if(fileId){try{file=DriveApp.getFileById(fileId)}catch(ignore){file=null}}
+if(fileId&&!file){return}
+if(!fileId&&!url){return}
+let thumb=url;
+if(file){try{file.setSharing(DriveApp.Access.ANYONE_WITH_LINK,DriveApp.Permission.VIEW)}catch(ignore){}thumb='https://drive.google.com/thumbnail?id='+encodeURIComponent(fileId)+'&sz=w1200'}
+photos.push({timestamp:r[0]?new Date(r[0]).toISOString():'',name:String(r[1]||'Anonymous #ABSON'),fileName:String(r[2]||''),type:String(r[3]||''),size:Number(r[4]||0),url:thumb,fileId:fileId})})}}
 catch(err){console.warn('Sheet photo feed failed: '+err)}
 if(!photos.length){try{const folder=getPhotoFolder_();const files=folder.getFiles();while(files.hasNext()&&photos.length<60){const file=files.next();const id=file.getId();if(seen[id])continue;try{file.setSharing(DriveApp.Access.ANYONE_WITH_LINK,DriveApp.Permission.VIEW)}catch(ignore){}photos.push({timestamp:file.getDateCreated().toISOString(),name:'Anonymous #ABSON',fileName:file.getName(),type:file.getMimeType(),size:file.getSize(),url:'https://drive.google.com/thumbnail?id='+encodeURIComponent(id)+'&sz=w1200',fileId:id});seen[id]=true}}catch(err){console.warn('Drive photo feed failed: '+err)}}
 return jsonResponse_({ok:true,photos:photos.slice(0,60)})}
