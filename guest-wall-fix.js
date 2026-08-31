@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded',function(){
-  /* Restore the live Camera Roll without changing the upload form. */
+  /* Restore and harden the live Camera Roll without changing the upload form. */
   if(!document.getElementById('guest-wall')){
     const rsvp=document.getElementById('rsvp');
     if(rsvp){
@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded',function(){
         </div>
         <div class="guest-wall-toolbar">
           <span class="guest-wall-label">LIVE FROM #ABSON</span>
-          <button class="guest-wall-refresh" id="guestWallRefresh" type="button">REFRESH ↻</button>
+          <button class="guest-wall-refresh" id="guestWallRefresh" type="button" aria-label="Refresh the live camera roll">REFRESH ↻</button>
         </div>
         <div class="guest-wall-status" id="guestWallStatus">Updated just now · new evidence appears automatically.</div>
         <div id="guestWallGrid" class="guest-wall-grid"></div>
@@ -31,7 +31,9 @@ document.addEventListener('DOMContentLoaded',function(){
     #guest-wall .guest-wall-toolbar{width:min(1240px,92vw)!important;margin:28px auto 12px!important;display:flex!important;align-items:center!important;justify-content:space-between!important;gap:20px!important}
     #guest-wall .guest-wall-label{display:inline-flex!important;align-items:center!important;font-size:11px!important;font-weight:900!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:#171717!important}
     #guest-wall .guest-wall-label:before{content:''!important;display:inline-block!important;width:11px!important;height:11px!important;background:#d71920!important;border-radius:50%!important;margin-right:9px!important}
-    #guest-wall .guest-wall-refresh{border:2px solid #171717!important;background:#ffd447!important;color:#171717!important;padding:10px 14px!important;font:700 10px 'DM Sans',sans-serif!important;cursor:pointer!important;box-shadow:4px 4px 0 #171717!important}
+    #guest-wall .guest-wall-refresh{border:2px solid #171717!important;background:#ffd447!important;color:#171717!important;padding:10px 14px!important;font:700 10px 'DM Sans',sans-serif!important;cursor:pointer!important;box-shadow:4px 4px 0 #171717!important;white-space:nowrap!important}
+    #guest-wall .guest-wall-refresh:active{transform:translate(2px,2px)!important;box-shadow:2px 2px 0 #171717!important}
+    #guest-wall .guest-wall-refresh[aria-busy="true"]{opacity:.65!important;pointer-events:none!important}
     #guest-wall .guest-wall-status{width:min(1240px,92vw)!important;margin:0 auto 18px!important;font-size:11px!important;font-weight:700!important;opacity:.65!important}
     #guest-wall #guestWallViewport{width:min(1240px,92vw)!important;margin:0 auto!important;overflow:hidden!important}
     #guest-wall #guestWallGrid{display:flex!important;flex-wrap:nowrap!important;gap:0!important;width:100%!important;overflow:visible!important;align-items:stretch!important;transition:transform .38s cubic-bezier(.2,.8,.2,1)!important}
@@ -48,9 +50,10 @@ document.addEventListener('DOMContentLoaded',function(){
     #guest-wall .guest-wall-empty{width:min(1240px,92vw)!important;min-height:190px!important;margin:0 auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important;background:#ffd447!important;border:2px dashed #171717!important;padding:30px!important;box-sizing:border-box!important;font:clamp(28px,5vw,52px)/.95 'Bebas Neue',sans-serif!important}
     #guest-wall .guest-wall-empty span{display:block!important;margin-top:15px!important;font:16px/1.5 'DM Sans',sans-serif!important}
     @media(max-width:700px){
-      #guest-wall .guest-wall-toolbar{width:90vw!important;margin:22px auto 12px!important}
-      #guest-wall .guest-wall-status{width:90vw!important;margin-bottom:14px!important}
-      #guest-wall .guest-wall-refresh{display:none!important}
+      #guest-wall .guest-wall-toolbar{width:90vw!important;margin:22px auto 10px!important}
+      #guest-wall .guest-wall-label{font-size:10px!important}
+      #guest-wall .guest-wall-refresh{display:inline-flex!important;align-items:center!important;justify-content:center!important;padding:8px 10px!important;font-size:9px!important;box-shadow:3px 3px 0 #171717!important}
+      #guest-wall .guest-wall-status{width:90vw!important;margin-bottom:14px!important;font-size:10px!important}
       #guest-wall #guestWallViewport{width:90vw!important}
       #guest-wall #guestWallGrid{padding:4px 4px 12px!important;box-sizing:border-box!important;touch-action:pan-y!important}
       #guest-wall #guestWallGrid .guest-wall-card{box-shadow:5px 5px 0 #171717!important}
@@ -67,6 +70,48 @@ document.addEventListener('DOMContentLoaded',function(){
   `;
   document.head.appendChild(style);
 
+  function refreshWall(reason){
+    if(typeof loadGuestWall!=='function')return;
+    const btn=document.getElementById('guestWallRefresh');
+    const status=document.getElementById('guestWallStatus');
+    if(btn){btn.setAttribute('aria-busy','true');btn.textContent='REFRESHING…'}
+    if(status&&reason==='manual')status.textContent='Checking for new #ABSON evidence…';
+    try{
+      const result=loadGuestWall();
+      if(result&&typeof result.then==='function'){
+        result.finally(()=>finishRefresh(reason));
+      }else{
+        setTimeout(()=>finishRefresh(reason),450);
+      }
+    }catch(e){
+      finishRefresh(reason,true);
+    }
+  }
+  function finishRefresh(reason,failed){
+    const btn=document.getElementById('guestWallRefresh');
+    const status=document.getElementById('guestWallStatus');
+    if(btn){btn.removeAttribute('aria-busy');btn.textContent='REFRESH ↻'}
+    if(status&&reason==='manual')status.textContent=failed?'Could not refresh right now · please try again.':'Updated just now · new evidence appears automatically.';
+  }
+
   const refresh=document.getElementById('guestWallRefresh');
-  if(refresh){refresh.addEventListener('click',function(){if(typeof loadGuestWall==='function')loadGuestWall();});}
+  if(refresh){refresh.addEventListener('click',function(){refreshWall('manual')});}
+
+  /* Refresh when a guest returns to the page after it has been in the background. */
+  let wasHidden=false;
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){wasHidden=true;return}
+    if(wasHidden){wasHidden=false;refreshWall('resume')}
+  });
+
+  /* Refresh when the Camera Roll comes into view, but only after it has been idle. */
+  const wall=document.getElementById('guest-wall');
+  if(wall&&'IntersectionObserver' in window){
+    let seen=false;
+    const observer=new IntersectionObserver(entries=>{
+      const visible=entries.some(e=>e.isIntersecting);
+      if(visible&&!seen){seen=true;refreshWall('view')}
+    },{rootMargin:'200px 0px'});
+    observer.observe(wall);
+  }
 });
