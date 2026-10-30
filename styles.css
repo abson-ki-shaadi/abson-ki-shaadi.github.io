@@ -1423,3 +1423,49 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
 
 }
 }
+
+
+/* =========================================================
+   EVIDENCE GALLERY — RESPONSIVE GRID FOR ALL PHOTO COUNTS
+   ========================================================= */
+.gallery-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr)) !important;
+  align-items: stretch !important;
+  grid-auto-flow: row !important;
+}
+.gallery-grid .gallery-photo,
+.gallery-grid .p1,
+.gallery-grid .p2,
+.gallery-grid .p3,
+.gallery-grid .p4,
+.gallery-grid .p5,
+.gallery-grid .p6,
+.gallery-grid .p7,
+.gallery-grid .p8 {
+  grid-column: auto !important;
+  grid-row: auto !important;
+  transform: none !important;
+  min-width: 0 !important;
+}
+.gallery-grid .gallery-photo img {
+  display: block !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 4 / 5 !important;
+  object-fit: cover !important;
+}
+.gallery-grid .gallery-photo:hover {
+  transform: translateY(-5px) !important;
+}
+@media (max-width: 520px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 10px !important;
+  }
+  .gallery-grid .gallery-photo {
+    padding: 5px !important;
+  }
+  .gallery-grid .gallery-photo figcaption {
+    font-size: 8px !important;
+  }
+}
