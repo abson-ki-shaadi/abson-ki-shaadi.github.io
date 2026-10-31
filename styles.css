@@ -1530,3 +1530,120 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
 @media (prefers-reduced-motion: reduce) {
   .gallery-grid > .gallery-photo { transition: none !important; }
 }
+
+
+/* Final wedding countdown — bold editorial end note */
+.final-countdown {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--ink);
+  color: var(--paper);
+  padding: clamp(76px, 10vw, 140px) 6vw;
+}
+.final-countdown::before {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(255,255,255,.24);
+  pointer-events: none;
+  z-index: -1;
+}
+.final-countdown-inner {
+  width: min(1040px, 100%);
+  margin: 0 auto;
+  text-align: center;
+}
+.final-countdown-kicker {
+  margin: 0 0 16px;
+  color: var(--yellow);
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .28em;
+}
+.final-countdown-date {
+  margin: 0;
+  font: 1rem "DM Sans", sans-serif;
+  font-weight: 800;
+  letter-spacing: .3em;
+}
+.final-countdown-date span { color: var(--pink); padding: 0 .3em; }
+.final-countdown h2 {
+  margin: 14px 0 12px;
+  font: clamp(4.2rem, 11vw, 9rem)/.78 "Bebas Neue", sans-serif;
+  letter-spacing: .015em;
+}
+.final-countdown h2 em { color: var(--yellow); font-style: normal; }
+.final-countdown-note {
+  max-width: 480px;
+  margin: 24px auto 38px;
+  color: rgba(255,255,255,.78);
+  font-size: 13px;
+  line-height: 1.7;
+}
+.final-countdown-clock {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr 1px 1fr 1px 1fr;
+  align-items: center;
+  gap: clamp(10px, 3vw, 34px);
+  max-width: 850px;
+  margin: 0 auto;
+  padding: clamp(20px, 4vw, 36px) clamp(12px, 3vw, 30px);
+  background: var(--paper);
+  color: var(--ink);
+  border: 3px solid var(--yellow);
+  box-shadow: 9px 9px 0 var(--pink);
+  transform: rotate(-.7deg);
+}
+.final-countdown-clock div { min-width: 0; }
+.final-countdown-clock strong {
+  display: block;
+  font: clamp(3.2rem, 8vw, 6.5rem)/.9 "Bebas Neue", sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+.final-countdown-clock small {
+  display: block;
+  margin-top: 10px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .18em;
+}
+.final-countdown-clock > i {
+  display: block;
+  width: 1px;
+  height: 54px;
+  background: rgba(0,0,0,.22);
+}
+.final-countdown-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 42px;
+  color: rgba(255,255,255,.65);
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .2em;
+}
+.final-countdown-scribble {
+  position: absolute;
+  right: 8%;
+  top: 12%;
+  color: var(--pink);
+  font: clamp(4rem, 9vw, 8rem)/1 "Playfair Display", serif;
+  transform: rotate(14deg);
+  opacity: .85;
+  pointer-events: none;
+}
+@media (max-width: 600px) {
+  .final-countdown { padding: 76px 7vw; }
+  .final-countdown::before { inset: 10px; }
+  .final-countdown-kicker { font-size: 8px; letter-spacing: .18em; }
+  .final-countdown h2 { font-size: clamp(4rem, 18vw, 6rem); }
+  .final-countdown-note { font-size: 12px; margin: 20px auto 30px; }
+  .final-countdown-clock { gap: 7px; padding: 20px 8px; box-shadow: 5px 5px 0 var(--pink); }
+  .final-countdown-clock strong { font-size: clamp(2.35rem, 11vw, 3.8rem); }
+  .final-countdown-clock small { font-size: 6px; letter-spacing: .1em; }
+  .final-countdown-clock > i { height: 36px; }
+  .final-countdown-footer { flex-direction: column; align-items: center; font-size: 8px; margin-top: 32px; }
+  .final-countdown-scribble { right: 8%; top: 6%; font-size: 4rem; }
+}
