@@ -1472,3 +1472,32 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
     grid-template-columns: 1fr !important;
   }
 }
+
+
+/* Lightbox photo navigation */
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 72px;
+  border: 2px solid #fff;
+  background: var(--yellow);
+  color: var(--ink);
+  box-shadow: 5px 5px 0 #000;
+  font: 42px/1 Arial, sans-serif;
+  cursor: pointer;
+}
+.lightbox-prev { left: 22px; }
+.lightbox-next { right: 22px; }
+.lightbox-nav:focus-visible,
+.lightbox-close:focus-visible { outline: 3px solid #fff; outline-offset: 4px; }
+@media(max-width:800px) {
+  .lightbox-nav { width: 42px; height: 58px; font-size: 34px; }
+  .lightbox-prev { left: 8px; }
+  .lightbox-next { right: 8px; }
+}
