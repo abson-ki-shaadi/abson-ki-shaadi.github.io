@@ -2027,3 +2027,88 @@ footer {
     padding: 20px 16px !important;
   }
 }
+
+
+/* RSVP section — compact layout, less vertical scrolling */
+.rsvp.section {
+  padding: 42px 6vw !important;
+}
+.rsvp-inner {
+  max-width: 620px !important;
+}
+.rsvp-inner .kicker {
+  margin: 0 0 6px !important;
+}
+.rsvp-inner h2 {
+  font-size: clamp(3.4rem, 6vw, 4.6rem) !important;
+  line-height: .86 !important;
+  margin: 6px 0 8px !important;
+}
+.rsvp-inner > p:not(.kicker):not(.form-note) {
+  max-width: 540px;
+  margin: 0 auto 12px !important;
+  line-height: 1.5 !important;
+  font-size: 13px;
+}
+.rsvp form {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 9px !important;
+  margin-top: 14px !important;
+}
+.rsvp form textarea,
+.rsvp form button {
+  grid-column: 1 / -1 !important;
+}
+.rsvp input,
+.rsvp select,
+.rsvp textarea {
+  padding: 10px 12px !important;
+  min-height: 40px;
+}
+.rsvp textarea {
+  min-height: 76px;
+  resize: vertical;
+}
+.rsvp form .cta {
+  padding: 12px 16px !important;
+}
+.rsvp .form-note {
+  margin: 8px 0 0 !important;
+  min-height: 0 !important;
+}
+@media (max-width: 800px) {
+  .rsvp.section {
+    padding: 30px 5vw !important;
+  }
+  .rsvp-inner {
+    max-width: 560px !important;
+  }
+  .rsvp-inner h2 {
+    font-size: clamp(3rem, 12vw, 4rem) !important;
+  }
+  .rsvp-inner > p:not(.kicker):not(.form-note) {
+    font-size: 12px;
+    margin-bottom: 8px !important;
+  }
+  .rsvp form {
+    grid-template-columns: 1fr !important;
+    gap: 8px !important;
+    margin-top: 12px !important;
+  }
+  .rsvp form textarea,
+  .rsvp form button {
+    grid-column: 1 !important;
+  }
+  .rsvp input,
+  .rsvp select,
+  .rsvp textarea {
+    padding: 9px 11px !important;
+    min-height: 38px;
+  }
+  .rsvp textarea {
+    min-height: 66px;
+  }
+  .rsvp form .cta {
+    padding: 11px 14px !important;
+  }
+}
