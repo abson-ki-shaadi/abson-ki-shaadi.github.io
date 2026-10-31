@@ -1501,3 +1501,32 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   .lightbox-prev { left: 8px; }
   .lightbox-next { right: 8px; }
 }
+
+
+/* Exhibit photo hover: gentle lift like picking up a printed photograph */
+.gallery-grid > .gallery-photo {
+  transition: transform .28s cubic-bezier(.2,.75,.25,1), box-shadow .28s ease;
+  transform-origin: center center;
+  will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) {
+  .gallery-grid > .gallery-photo:nth-child(4n + 1):hover {
+    transform: translateY(-7px) rotate(-1.4deg) !important;
+    z-index: 2;
+  }
+  .gallery-grid > .gallery-photo:nth-child(4n + 2):hover {
+    transform: translateY(-7px) rotate(1.2deg) !important;
+    z-index: 2;
+  }
+  .gallery-grid > .gallery-photo:nth-child(4n + 3):hover {
+    transform: translateY(-7px) rotate(-0.8deg) !important;
+    z-index: 2;
+  }
+  .gallery-grid > .gallery-photo:nth-child(4n):hover {
+    transform: translateY(-7px) rotate(1.5deg) !important;
+    z-index: 2;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .gallery-grid > .gallery-photo { transition: none !important; }
+}
