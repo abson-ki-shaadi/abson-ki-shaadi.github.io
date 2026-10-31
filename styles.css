@@ -1647,3 +1647,96 @@ footer h3 span{display:block;color:#c9aa72;font-size:.78em;margin-top:8px;letter
   .final-countdown-footer { flex-direction: column; align-items: center; font-size: 8px; margin-top: 32px; }
   .final-countdown-scribble { right: 8%; top: 6%; font-size: 4rem; }
 }
+
+
+/* Hidden #ABSON multi-click wedding surprise */
+.abson-surprise {
+  position: fixed;
+  inset: 0;
+  z-index: 2147483600;
+  display: grid;
+  place-items: center;
+  padding: 22px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity .28s ease, visibility .28s ease;
+}
+.abson-surprise.is-visible {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+.abson-surprise-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 14, 13, .82);
+  backdrop-filter: blur(7px);
+}
+.abson-surprise-card {
+  position: relative;
+  width: min(520px, 100%);
+  padding: clamp(34px, 7vw, 58px) clamp(24px, 6vw, 48px);
+  background: var(--paper);
+  color: var(--ink);
+  border: 3px solid var(--ink);
+  box-shadow: 10px 10px 0 var(--pink);
+  text-align: center;
+  transform: translateY(16px) rotate(-1deg) scale(.97);
+  transition: transform .35s cubic-bezier(.2,.8,.2,1);
+}
+.abson-surprise.is-visible .abson-surprise-card {
+  transform: translateY(0) rotate(-1deg) scale(1);
+}
+.abson-surprise-close {
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 32px/1 "DM Sans", sans-serif;
+  cursor: pointer;
+}
+.abson-surprise-kicker {
+  margin: 0 0 14px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .2em;
+}
+.abson-surprise-heart {
+  color: #e94f79;
+  font: 3.5rem/1 "Playfair Display", serif;
+}
+.abson-surprise-card h2 {
+  margin: 14px 0 18px;
+  font: clamp(3.5rem, 10vw, 5.2rem)/.82 "Bebas Neue", sans-serif;
+}
+.abson-surprise-card h2 em { color: #e94f79; font-style: normal; }
+.abson-surprise-message {
+  max-width: 390px;
+  margin: 0 auto 14px;
+  font: 1.05rem/1.6 "Playfair Display", serif;
+}
+.abson-surprise-thanks {
+  max-width: 380px;
+  margin: 0 auto 24px;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.abson-surprise-signoff {
+  margin: 0;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .16em;
+}
+.abson-surprise-hint {
+  display: block;
+  margin-top: 24px;
+  color: #777;
+  font-size: 9px;
+  font-style: italic;
+}
+@media (prefers-reduced-motion: reduce) {
+  .abson-surprise, .abson-surprise-card { transition: none !important; }
+}
